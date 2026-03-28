@@ -9,22 +9,15 @@ namespace KeyforgeDota;
 
 public partial class MainWindow : Window
 {
-    // Configuração dinâmica das teclas
-    public string WindowName { get; set; } = "Dota 2";
-    public string QuasKey { get; set; } = "q";
-    public string WexKey { get; set; } = "w";
-    public string ExortKey { get; set; } = "e";
-    public string InvokeKey { get; set; } = "r";
-    public string FirstSpellKey { get; set; } = "d";
-    public string SecondSpellKey { get; set; } = "f";
-
-    // Os campos dos controles são gerados automaticamente pelo Avalonia
+    private AppConfig Config;
 
     public MainWindow()
     {
         InitializeComponent();
+        Config = AppConfig.Load();
         AttachControls();
         AttachEvents();
+        LoadConfigToUI();
     }
 
     private void AttachControls()
@@ -37,6 +30,15 @@ public partial class MainWindow : Window
         FirstSpellKeyBox = this.FindControl<TextBox>("FirstSpellKeyBox");
         SecondSpellKeyBox = this.FindControl<TextBox>("SecondSpellKeyBox");
         StatusText = this.FindControl<TextBlock>("StatusText");
+
+        // Eventos para salvar ao alterar
+        WindowNameBox!.LostFocus += (_, __) => SaveConfigFromUI();
+        QuasKeyBox!.LostFocus += (_, __) => SaveConfigFromUI();
+        WexKeyBox!.LostFocus += (_, __) => SaveConfigFromUI();
+        ExortKeyBox!.LostFocus += (_, __) => SaveConfigFromUI();
+        InvokeKeyBox!.LostFocus += (_, __) => SaveConfigFromUI();
+        FirstSpellKeyBox!.LostFocus += (_, __) => SaveConfigFromUI();
+        SecondSpellKeyBox!.LostFocus += (_, __) => SaveConfigFromUI();
     }
 
     private void AttachEvents()
@@ -56,20 +58,37 @@ public partial class MainWindow : Window
 
     private void UpdateConfigFromUI()
     {
-        if (WindowNameBox != null) WindowName = WindowNameBox.Text ?? "Dota 2";
-        if (QuasKeyBox != null) QuasKey = QuasKeyBox.Text ?? "q";
-        if (WexKeyBox != null) WexKey = WexKeyBox.Text ?? "w";
-        if (ExortKeyBox != null) ExortKey = ExortKeyBox.Text ?? "e";
-        if (InvokeKeyBox != null) InvokeKey = InvokeKeyBox.Text ?? "r";
-        if (FirstSpellKeyBox != null) FirstSpellKey = FirstSpellKeyBox.Text ?? "d";
-        if (SecondSpellKeyBox != null) SecondSpellKey = SecondSpellKeyBox.Text ?? "f";
+        Config.WindowName = WindowNameBox?.Text ?? "Dota 2";
+        Config.QuasKey = QuasKeyBox?.Text ?? "q";
+        Config.WexKey = WexKeyBox?.Text ?? "w";
+        Config.ExortKey = ExortKeyBox?.Text ?? "e";
+        Config.InvokeKey = InvokeKeyBox?.Text ?? "r";
+        Config.FirstSpellKey = FirstSpellKeyBox?.Text ?? "d";
+        Config.SecondSpellKey = SecondSpellKeyBox?.Text ?? "f";
+    }
+
+    private void LoadConfigToUI()
+    {
+        if (WindowNameBox != null) WindowNameBox.Text = Config.WindowName;
+        if (QuasKeyBox != null) QuasKeyBox.Text = Config.QuasKey;
+        if (WexKeyBox != null) WexKeyBox.Text = Config.WexKey;
+        if (ExortKeyBox != null) ExortKeyBox.Text = Config.ExortKey;
+        if (InvokeKeyBox != null) InvokeKeyBox.Text = Config.InvokeKey;
+        if (FirstSpellKeyBox != null) FirstSpellKeyBox.Text = Config.FirstSpellKey;
+        if (SecondSpellKeyBox != null) SecondSpellKeyBox.Text = Config.SecondSpellKey;
+    }
+
+    private void SaveConfigFromUI()
+    {
+        UpdateConfigFromUI();
+        Config.Save();
     }
 
     private async Task RunComboAsync(Func<IntPtr, Task> comboFunc)
     {
         UpdateConfigFromUI();
         SetStatus("Buscando janela...");
-        var hWnd = FindWindowByTitle(WindowName);
+        var hWnd = FindWindowByTitle(Config.WindowName);
         if (hWnd == IntPtr.Zero)
         {
             SetStatus("Janela não encontrada", error: true);
@@ -93,101 +112,101 @@ public partial class MainWindow : Window
     private async Task CastColdSnap(IntPtr hWnd)
     {
         await AllQuas(hWnd);
-        await SendKey(hWnd, InvokeKey);
+        await SendKey(hWnd, Config.InvokeKey);
         await AllWex(hWnd);
     }
     private async Task CastEMP(IntPtr hWnd)
     {
         await AllWex(hWnd);
-        await SendKey(hWnd, InvokeKey);
+        await SendKey(hWnd, Config.InvokeKey);
         await AllWex(hWnd);
     }
     private async Task CastSunStrike(IntPtr hWnd)
     {
         await AllExort(hWnd);
-        await SendKey(hWnd, InvokeKey);
+        await SendKey(hWnd, Config.InvokeKey);
         await AllWex(hWnd);
     }
     private async Task CastTornado(IntPtr hWnd)
     {
-        await SendKey(hWnd, WexKey);
-        await SendKey(hWnd, WexKey);
-        await SendKey(hWnd, QuasKey);
-        await SendKey(hWnd, InvokeKey);
+        await SendKey(hWnd, Config.WexKey);
+        await SendKey(hWnd, Config.WexKey);
+        await SendKey(hWnd, Config.QuasKey);
+        await SendKey(hWnd, Config.InvokeKey);
         await AllWex(hWnd);
     }
     private async Task CastChaosMeteor(IntPtr hWnd)
     {
-        await SendKey(hWnd, ExortKey);
-        await SendKey(hWnd, ExortKey);
-        await SendKey(hWnd, WexKey);
-        await SendKey(hWnd, InvokeKey);
+        await SendKey(hWnd, Config.ExortKey);
+        await SendKey(hWnd, Config.ExortKey);
+        await SendKey(hWnd, Config.WexKey);
+        await SendKey(hWnd, Config.InvokeKey);
         await AllWex(hWnd);
     }
     private async Task CastDeafeningBlast(IntPtr hWnd)
     {
-        await SendKey(hWnd, QuasKey);
-        await SendKey(hWnd, WexKey);
-        await SendKey(hWnd, ExortKey);
-        await SendKey(hWnd, InvokeKey);
+        await SendKey(hWnd, Config.QuasKey);
+        await SendKey(hWnd, Config.WexKey);
+        await SendKey(hWnd, Config.ExortKey);
+        await SendKey(hWnd, Config.InvokeKey);
         await AllWex(hWnd);
     }
     private async Task CastIceWall(IntPtr hWnd)
     {
-        await SendKey(hWnd, QuasKey);
-        await SendKey(hWnd, QuasKey);
-        await SendKey(hWnd, ExortKey);
-        await SendKey(hWnd, InvokeKey);
+        await SendKey(hWnd, Config.QuasKey);
+        await SendKey(hWnd, Config.QuasKey);
+        await SendKey(hWnd, Config.ExortKey);
+        await SendKey(hWnd, Config.InvokeKey);
         await AllWex(hWnd);
     }
     private async Task CastGhostWalk(IntPtr hWnd)
     {
-        await SendKey(hWnd, QuasKey);
-        await SendKey(hWnd, QuasKey);
-        await SendKey(hWnd, WexKey);
-        await SendKey(hWnd, InvokeKey);
+        await SendKey(hWnd, Config.QuasKey);
+        await SendKey(hWnd, Config.QuasKey);
+        await SendKey(hWnd, Config.WexKey);
+        await SendKey(hWnd, Config.InvokeKey);
         await AllWex(hWnd);
     }
     private async Task CastPanicGhostWalk(IntPtr hWnd)
     {
         await CastGhostWalk(hWnd);
-        await SendKey(hWnd, FirstSpellKey);
+        await SendKey(hWnd, Config.FirstSpellKey);
     }
     private async Task CastAlacrity(IntPtr hWnd)
     {
-        await SendKey(hWnd, WexKey);
-        await SendKey(hWnd, WexKey);
-        await SendKey(hWnd, ExortKey);
-        await SendKey(hWnd, InvokeKey);
+        await SendKey(hWnd, Config.WexKey);
+        await SendKey(hWnd, Config.WexKey);
+        await SendKey(hWnd, Config.ExortKey);
+        await SendKey(hWnd, Config.InvokeKey);
         await AllWex(hWnd);
     }
     private async Task CastForgeSpirit(IntPtr hWnd)
     {
-        await SendKey(hWnd, ExortKey);
-        await SendKey(hWnd, ExortKey);
-        await SendKey(hWnd, QuasKey);
-        await SendKey(hWnd, InvokeKey);
+        await SendKey(hWnd, Config.ExortKey);
+        await SendKey(hWnd, Config.ExortKey);
+        await SendKey(hWnd, Config.QuasKey);
+        await SendKey(hWnd, Config.InvokeKey);
         await AllWex(hWnd);
     }
 
     // ========== SEQUÊNCIAS AUXILIARES ==========
     private async Task AllQuas(IntPtr hWnd)
     {
-        await SendKey(hWnd, QuasKey);
-        await SendKey(hWnd, QuasKey);
-        await SendKey(hWnd, QuasKey);
+        await SendKey(hWnd, Config.QuasKey);
+        await SendKey(hWnd, Config.QuasKey);
+        await SendKey(hWnd, Config.QuasKey);
     }
     private async Task AllWex(IntPtr hWnd)
     {
-        await SendKey(hWnd, WexKey);
-        await SendKey(hWnd, WexKey);
-        await SendKey(hWnd, WexKey);
+        await SendKey(hWnd, Config.WexKey);
+        await SendKey(hWnd, Config.WexKey);
+        await SendKey(hWnd, Config.WexKey);
     }
     private async Task AllExort(IntPtr hWnd)
     {
-        await SendKey(hWnd, ExortKey);
-        await SendKey(hWnd, ExortKey);
-        await SendKey(hWnd, ExortKey);
+        await SendKey(hWnd, Config.ExortKey);
+        await SendKey(hWnd, Config.ExortKey);
+        await SendKey(hWnd, Config.ExortKey);
     }
 
     // ========== ENVIO DE TECLAS ==========
