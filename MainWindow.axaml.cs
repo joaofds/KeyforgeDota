@@ -91,12 +91,25 @@ public partial class MainWindow : Window
         var hWnd = FindWindowByTitle(Config.WindowName);
         if (hWnd == IntPtr.Zero)
         {
-            SetStatus("Janela não encontrada", error: true);
+            SetStatus($"Janela '{Config.WindowName}' não encontrada", error: true);
             return;
         }
+        // Tenta obter o título real da janela encontrada
+        string foundTitle = GetWindowTitle(hWnd);
+        SetStatus($"Janela encontrada: '{foundTitle}' (hWnd: 0x{hWnd.ToInt64():X})");
+        await Task.Delay(500);
         SetStatus("Executando combo...");
         await comboFunc(hWnd);
         SetStatus("Pronto");
+    }
+    [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+    private static extern int GetWindowText(IntPtr hWnd, System.Text.StringBuilder lpString, int nMaxCount);
+
+    private string GetWindowTitle(IntPtr hWnd)
+    {
+        var sb = new System.Text.StringBuilder(256);
+        GetWindowText(hWnd, sb, sb.Capacity);
+        return sb.ToString();
     }
 
     private void SetStatus(string text, bool error = false)
