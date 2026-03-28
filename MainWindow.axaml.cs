@@ -146,6 +146,9 @@ public partial class MainWindow : Window
         InvokeKeyBox!.LostFocus += (_, __) => SaveConfigFromUI();
         FirstSpellKeyBox!.LostFocus += (_, __) => SaveConfigFromUI();
         SecondSpellKeyBox!.LostFocus += (_, __) => SaveConfigFromUI();
+        WexKeyBox!.LostFocus += (_, __) => SaveConfigFromUI();
+        ExortKeyBox!.LostFocus += (_, __) => SaveConfigFromUI();
+        InvokeKeyBox!.LostFocus += (_, __) => SaveConfigFromUI();
     }
 
     private void AttachEvents()
@@ -165,24 +168,24 @@ public partial class MainWindow : Window
 
     private void UpdateConfigFromUI()
     {
+        Config.FirstSpellKey = FirstSpellKeyBox?.Text ?? "d";
+        Config.SecondSpellKey = SecondSpellKeyBox?.Text ?? "f";
         Config.WindowName = WindowNameBox?.Text ?? "Dota 2";
         Config.QuasKey = QuasKeyBox?.Text ?? "q";
         Config.WexKey = WexKeyBox?.Text ?? "w";
         Config.ExortKey = ExortKeyBox?.Text ?? "e";
         Config.InvokeKey = InvokeKeyBox?.Text ?? "r";
-        Config.FirstSpellKey = FirstSpellKeyBox?.Text ?? "d";
-        Config.SecondSpellKey = SecondSpellKeyBox?.Text ?? "f";
     }
 
     private void LoadConfigToUI()
     {
+        if (FirstSpellKeyBox != null) FirstSpellKeyBox.Text = Config.FirstSpellKey;
+        if (SecondSpellKeyBox != null) SecondSpellKeyBox.Text = Config.SecondSpellKey;
         if (WindowNameBox != null) WindowNameBox.Text = Config.WindowName;
         if (QuasKeyBox != null) QuasKeyBox.Text = Config.QuasKey;
         if (WexKeyBox != null) WexKeyBox.Text = Config.WexKey;
         if (ExortKeyBox != null) ExortKeyBox.Text = Config.ExortKey;
         if (InvokeKeyBox != null) InvokeKeyBox.Text = Config.InvokeKey;
-        if (FirstSpellKeyBox != null) FirstSpellKeyBox.Text = Config.FirstSpellKey;
-        if (SecondSpellKeyBox != null) SecondSpellKeyBox.Text = Config.SecondSpellKey;
     }
 
     private void SaveConfigFromUI()

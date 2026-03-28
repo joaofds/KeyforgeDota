@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="600"
+        mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="720" Width="480" Height="720" MinWidth="480" MinHeight="720" MaxWidth="480" MaxHeight="720"
         x:Class="KeyforgeDota.MainWindow"
         Title="Keyforge Invoker Helper">
     <Border Background="#23272F" CornerRadius="12" Padding="24">
@@ -12,32 +12,34 @@
             <TextBox Name="WindowNameBox" Watermark="Ex: Dota 2" Background="#2C2F36" Foreground="#F5F6FA"/>
 
             <TextBlock Text="Teclas das habilidades:" Margin="0,16,0,0" Foreground="#B0B3B8"/>
-            <UniformGrid Columns="2" Rows="3" Margin="0,0,0,8" HorizontalAlignment="Stretch">
+            <StackPanel Orientation="Horizontal" Spacing="16" Margin="0,0,0,8" HorizontalAlignment="Center">
                 <StackPanel>
-                    <TextBlock Text="Quas" Foreground="#B0B3B8"/>
-                    <TextBox Name="QuasKeyBox" Watermark="q" Background="#2C2F36" Foreground="#F5F6FA"/>
+                    <TextBlock Text="Skill 1" Foreground="#B0B3B8" HorizontalAlignment="Center"/>
+                    <TextBox Name="QuasKeyBox" Watermark="q" Background="#2C2F36" Foreground="#F5F6FA" MaxLength="1" Width="32" HorizontalContentAlignment="Center"/>
                 </StackPanel>
                 <StackPanel>
-                    <TextBlock Text="Wex" Foreground="#B0B3B8"/>
-                    <TextBox Name="WexKeyBox" Watermark="w" Background="#2C2F36" Foreground="#F5F6FA"/>
+                    <TextBlock Text="Skill 2" Foreground="#B0B3B8" HorizontalAlignment="Center"/>
+                    <TextBox Name="WexKeyBox" Watermark="w" Background="#2C2F36" Foreground="#F5F6FA" MaxLength="1" Width="32" HorizontalContentAlignment="Center"/>
                 </StackPanel>
                 <StackPanel>
-                    <TextBlock Text="Exort" Foreground="#B0B3B8"/>
-                    <TextBox Name="ExortKeyBox" Watermark="e" Background="#2C2F36" Foreground="#F5F6FA"/>
+                    <TextBlock Text="Skill 3" Foreground="#B0B3B8" HorizontalAlignment="Center"/>
+                    <TextBox Name="ExortKeyBox" Watermark="e" Background="#2C2F36" Foreground="#F5F6FA" MaxLength="1" Width="32" HorizontalContentAlignment="Center"/>
                 </StackPanel>
                 <StackPanel>
-                    <TextBlock Text="Invoke" Foreground="#B0B3B8"/>
-                    <TextBox Name="InvokeKeyBox" Watermark="r" Background="#2C2F36" Foreground="#F5F6FA"/>
+                    <TextBlock Text="Skill 4" Foreground="#B0B3B8" HorizontalAlignment="Center"/>
+                    <TextBox Name="InvokeKeyBox" Watermark="r" Background="#2C2F36" Foreground="#F5F6FA" MaxLength="1" Width="32" HorizontalContentAlignment="Center"/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Spacing="16" Margin="0,0,0,8" HorizontalAlignment="Center">
+                <StackPanel>
+                    <TextBlock Text="Skill 5" Foreground="#B0B3B8" HorizontalAlignment="Center"/>
+                    <TextBox Name="FirstSpellKeyBox" Watermark="d" Background="#2C2F36" Foreground="#F5F6FA" MaxLength="1" Width="32" HorizontalContentAlignment="Center"/>
                 </StackPanel>
                 <StackPanel>
-                    <TextBlock Text="Primeiro Feitiço" Foreground="#B0B3B8"/>
-                    <TextBox Name="FirstSpellKeyBox" Watermark="d" Background="#2C2F36" Foreground="#F5F6FA"/>
+                    <TextBlock Text="Skill 6" Foreground="#B0B3B8" HorizontalAlignment="Center"/>
+                    <TextBox Name="SecondSpellKeyBox" Watermark="f" Background="#2C2F36" Foreground="#F5F6FA" MaxLength="1" Width="32" HorizontalContentAlignment="Center"/>
                 </StackPanel>
-                <StackPanel>
-                    <TextBlock Text="Segundo Feitiço" Foreground="#B0B3B8"/>
-                    <TextBox Name="SecondSpellKeyBox" Watermark="f" Background="#2C2F36" Foreground="#F5F6FA"/>
-                </StackPanel>
-            </UniformGrid>
+            </StackPanel>
 
             <TextBlock Text="Combos rápidos:" Margin="0,8,0,0" Foreground="#B0B3B8"/>
             <WrapPanel HorizontalAlignment="Center">
