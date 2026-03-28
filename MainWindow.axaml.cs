@@ -1,9 +1,10 @@
+using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using System.Runtime.InteropServices;
-using System;
 using System.Threading.Tasks;
 using Avalonia.Threading;
+using System.Collections.Generic;
 
 namespace KeyforgeDota;
 
@@ -11,13 +12,119 @@ public partial class MainWindow : Window
 {
     private AppConfig Config;
 
+    // Novo: Mapeamento reverso para busca rápida
+    private Dictionary<string, string> ComboToAbility = new();
+    private KeyboardHookWin? _keyboardHook;
+
     public MainWindow()
     {
         InitializeComponent();
         Config = AppConfig.Load();
+        BuildComboToAbilityMap();
         AttachControls();
         AttachEvents();
         LoadConfigToUI();
+
+        // Inicia hook global de teclado (WinAPI)
+        _keyboardHook = new KeyboardHookWin();
+        _keyboardHook.OnComboPressed += KeyboardHook_OnComboPressed;
+    }
+
+    protected override void OnClosed(EventArgs e)
+    {
+        base.OnClosed(e);
+        _keyboardHook?.Dispose();
+    }
+
+    // Handler para combos globais
+    private void KeyboardHook_OnComboPressed(HashSet<int> pressedKeys)
+    {
+        var combo = KeysToComboString(pressedKeys);
+        var ability = GetAbilityForCombo(combo);
+        if (ability != null)
+        {
+            Dispatcher.UIThread.Post(async () =>
+            {
+                SetStatus($"Combo detectado: {combo} → {ability}");
+                await DispararHabilidade(ability);
+            });
+        }
+    }
+
+    // Converte conjunto de Keys para string de combinação (ex: "space+t")
+    private string KeysToComboString(HashSet<int> keys)
+    {
+        var list = new List<string>();
+        if (keys.Contains(0x20)) list.Add("space");
+        if (keys.Contains(0x11)) list.Add("ctrl"); // VK_CONTROL
+        if (keys.Contains(0x12)) list.Add("alt");  // VK_MENU
+        if (keys.Contains(0x10)) list.Add("shift"); // VK_SHIFT
+        // Letras A-Z
+        for (int vk = 0x41; vk <= 0x5A; vk++)
+            if (keys.Contains(vk)) list.Add(((char)vk).ToString().ToLower());
+        // Números 0-9
+        for (int vk = 0x30; vk <= 0x39; vk++)
+            if (keys.Contains(vk)) list.Add(((char)vk).ToString());
+        return string.Join("+", list);
+    }
+
+    // Dispara a habilidade correspondente
+    private async Task DispararHabilidade(string ability)
+    {
+        var hWnd = FindWindowByTitle(Config.WindowName);
+        if (hWnd == IntPtr.Zero)
+        {
+            SetStatus($"Janela '{Config.WindowName}' não encontrada", error: true);
+            return;
+        }
+        switch (ability.ToLower())
+        {
+            case "tornado": await CastTornado(hWnd); break;
+            case "emp": await CastEMP(hWnd); break;
+            case "coldsnap": await CastColdSnap(hWnd); break;
+            case "sunstrike": await CastSunStrike(hWnd); break;
+            case "chaosmeteor": await CastChaosMeteor(hWnd); break;
+            case "deafeningblast": await CastDeafeningBlast(hWnd); break;
+            case "icewall": await CastIceWall(hWnd); break;
+            case "ghostwalk": await CastGhostWalk(hWnd); break;
+            case "panicghostwalk": await CastPanicGhostWalk(hWnd); break;
+            case "alacrity": await CastAlacrity(hWnd); break;
+            case "forgespirit": await CastForgeSpirit(hWnd); break;
+            default:
+                SetStatus($"Habilidade '{ability}' não implementada.", error: true);
+                break;
+        }
+    }
+
+    // Novo: Monta o dicionário reverso para busca rápida
+    private void BuildComboToAbilityMap()
+    {
+        ComboToAbility.Clear();
+        foreach (var kv in Config.KeyCombos)
+        {
+            var ability = kv.Key;
+            foreach (var combo in kv.Value)
+            {
+                var norm = NormalizeCombo(combo);
+                if (!string.IsNullOrWhiteSpace(norm))
+                    ComboToAbility[norm] = ability;
+            }
+        }
+    }
+
+    // Normaliza a string da combinação (ex: "space+t" -> "space+t")
+    private string NormalizeCombo(string combo)
+    {
+        return string.Join("+", combo.ToLower().Split('+', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries));
+    }
+
+    // Exemplo de uso: dado uma combinação pressionada, retorna a habilidade
+    private string? GetAbilityForCombo(string combo)
+    {
+        var norm = NormalizeCombo(combo);
+        if (ComboToAbility.TryGetValue(norm, out var ability))
+            return ability;
+        return null;
     }
 
     private void AttachControls()

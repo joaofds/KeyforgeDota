@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.IO;
@@ -16,8 +17,14 @@ public class AppConfig
     public string FirstSpellKey { get; set; } = "d";
     public string SecondSpellKey { get; set; } = "f";
 
+    // Novo: Mapeamento de combinações para habilidades
+    public Dictionary<string, List<string>> KeyCombos { get; set; } = new();
+
     [JsonIgnore]
     public static string ConfigPath => Path.Combine(AppContext.BaseDirectory, "config.json");
+
+    [JsonIgnore]
+    public static string KeyCombosPath => Path.Combine(AppContext.BaseDirectory, "config_keys.json");
 
     public void Save()
     {
@@ -27,6 +34,22 @@ public class AppConfig
         File.WriteAllText(ConfigPath, json);
     }
 
+    // Novo: Carregar combinações de teclas do arquivo config_keys.json
+    public void LoadKeyCombos()
+    {
+        try
+        {
+            if (File.Exists(KeyCombosPath))
+            {
+                var json = File.ReadAllText(KeyCombosPath);
+                var dict = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(json);
+                if (dict != null)
+                    KeyCombos = dict;
+            }
+        }
+        catch { }
+    }
+
     public static AppConfig Load()
     {
         try
@@ -34,10 +57,14 @@ public class AppConfig
             if (File.Exists(ConfigPath))
             {
                 var json = File.ReadAllText(ConfigPath);
-                return JsonSerializer.Deserialize<AppConfig>(json) ?? new AppConfig();
+                var config = JsonSerializer.Deserialize<AppConfig>(json) ?? new AppConfig();
+                config.LoadKeyCombos();
+                return config;
             }
         }
         catch { }
-        return new AppConfig();
+        var cfg = new AppConfig();
+        cfg.LoadKeyCombos();
+        return cfg;
     }
 }

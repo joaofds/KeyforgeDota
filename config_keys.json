@@ -1,0 +1,13 @@
+{
+  "tornado": [
+    "space+t",
+    "alt+t",
+    "t"
+  ],
+  "emp": [
+    "space+e",
+    "alt+e",
+    "e"
+  ]
+  // Adicione outras habilidades e combinações conforme necessário
+}
