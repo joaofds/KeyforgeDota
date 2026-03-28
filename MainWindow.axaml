@@ -2,8 +2,59 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="600"
         x:Class="KeyforgeDota.MainWindow"
-        Title="KeyforgeDota">
-    Welcome to Avalonia!
+        Title="Keyforge Invoker Helper">
+    <Border Background="#23272F" CornerRadius="12" Padding="24">
+        <StackPanel Spacing="18">
+            <TextBlock Text="Keyforge Invoker Helper" FontSize="28" Foreground="#F5F6FA" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <TextBlock Text="Janela de destino (nome exato):" Foreground="#B0B3B8"/>
+            <TextBox Name="WindowNameBox" Watermark="Ex: Dota 2" Background="#2C2F36" Foreground="#F5F6FA"/>
+
+            <TextBlock Text="Teclas das habilidades:" Margin="0,16,0,0" Foreground="#B0B3B8"/>
+            <UniformGrid Columns="2" Rows="3" Margin="0,0,0,8" HorizontalAlignment="Stretch">
+                <StackPanel>
+                    <TextBlock Text="Quas" Foreground="#B0B3B8"/>
+                    <TextBox Name="QuasKeyBox" Watermark="q" Background="#2C2F36" Foreground="#F5F6FA"/>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock Text="Wex" Foreground="#B0B3B8"/>
+                    <TextBox Name="WexKeyBox" Watermark="w" Background="#2C2F36" Foreground="#F5F6FA"/>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock Text="Exort" Foreground="#B0B3B8"/>
+                    <TextBox Name="ExortKeyBox" Watermark="e" Background="#2C2F36" Foreground="#F5F6FA"/>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock Text="Invoke" Foreground="#B0B3B8"/>
+                    <TextBox Name="InvokeKeyBox" Watermark="r" Background="#2C2F36" Foreground="#F5F6FA"/>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock Text="Primeiro Feitiço" Foreground="#B0B3B8"/>
+                    <TextBox Name="FirstSpellKeyBox" Watermark="d" Background="#2C2F36" Foreground="#F5F6FA"/>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock Text="Segundo Feitiço" Foreground="#B0B3B8"/>
+                    <TextBox Name="SecondSpellKeyBox" Watermark="f" Background="#2C2F36" Foreground="#F5F6FA"/>
+                </StackPanel>
+            </UniformGrid>
+
+            <TextBlock Text="Combos rápidos:" Margin="0,8,0,0" Foreground="#B0B3B8"/>
+            <WrapPanel HorizontalAlignment="Center">
+                <Button Name="ColdSnapBtn" Content="Cold Snap" Background="#5865F2" Foreground="White" Padding="10,6" Margin="4"/>
+                <Button Name="EMPBtn" Content="EMP" Background="#5865F2" Foreground="White" Padding="10,6" Margin="4"/>
+                <Button Name="SunStrikeBtn" Content="Sun Strike" Background="#5865F2" Foreground="White" Padding="10,6" Margin="4"/>
+                <Button Name="TornadoBtn" Content="Tornado" Background="#5865F2" Foreground="White" Padding="10,6" Margin="4"/>
+                <Button Name="ChaosMeteorBtn" Content="Chaos Meteor" Background="#5865F2" Foreground="White" Padding="10,6" Margin="4"/>
+                <Button Name="DeafeningBlastBtn" Content="Deafening Blast" Background="#5865F2" Foreground="White" Padding="10,6" Margin="4"/>
+                <Button Name="IceWallBtn" Content="Ice Wall" Background="#5865F2" Foreground="White" Padding="10,6" Margin="4"/>
+                <Button Name="GhostWalkBtn" Content="Ghost Walk" Background="#5865F2" Foreground="White" Padding="10,6" Margin="4"/>
+                <Button Name="PanicGhostWalkBtn" Content="Panic Ghost Walk" Background="#F23F43" Foreground="White" Padding="10,6" Margin="4"/>
+                <Button Name="AlacrityBtn" Content="Alacrity" Background="#5865F2" Foreground="White" Padding="10,6" Margin="4"/>
+                <Button Name="ForgeSpiritBtn" Content="Forge Spirit" Background="#5865F2" Foreground="White" Padding="10,6" Margin="4"/>
+            </WrapPanel>
+
+            <TextBlock Name="StatusText" Text="Pronto" Foreground="#43FF8E" FontWeight="SemiBold" Margin="0,16,0,0" HorizontalAlignment="Center"/>
+        </StackPanel>
+    </Border>
 </Window>
