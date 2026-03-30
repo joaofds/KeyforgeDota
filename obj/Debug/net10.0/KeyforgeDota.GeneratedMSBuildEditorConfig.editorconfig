@@ -23,8 +23,8 @@ build_property.EnableGeneratedComInterfaceComImportInterop =
 build_property.EffectiveAnalysisLevelStyle = 10.0
 build_property.EnableCodeStyleSeverity = 
 
-[E:/projetos/cs/KeyforgeDota/App.axaml]
+[e:/projetos/cs/KeyforgeDota/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[E:/projetos/cs/KeyforgeDota/MainWindow.axaml]
+[e:/projetos/cs/KeyforgeDota/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

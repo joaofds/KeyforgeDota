@@ -18,12 +18,8 @@ namespace KeyforgeDota
             _sendKeyToWindow = sendKeyToWindow;
         }
 
-        private async Task SendKey(IntPtr hWnd, string key)
-        {
-            if (string.IsNullOrWhiteSpace(key)) return;
-            _sendKeyToWindow(hWnd, key, 0);
-            await Task.Delay(20); // Pequeno delay entre teclas
-        }
+        private Task SendKey(IntPtr hWnd, string key)
+            => KeySender.SendKey(hWnd, key, _log, _console, _sendKeyToWindow);
 
         public async Task CastColdSnap(IntPtr hWnd)
         {
@@ -31,6 +27,9 @@ namespace KeyforgeDota
             await SendKey(hWnd, _config.QuasKey);
             await SendKey(hWnd, _config.QuasKey);
             await SendKey(hWnd, _config.InvokeKey);
+            await SendKey(hWnd, _config.WexKey);
+            await SendKey(hWnd, _config.WexKey);
+            await SendKey(hWnd, _config.WexKey);
         }
         public async Task CastEMP(IntPtr hWnd)
         {
@@ -38,6 +37,9 @@ namespace KeyforgeDota
             await SendKey(hWnd, _config.WexKey);
             await SendKey(hWnd, _config.WexKey);
             await SendKey(hWnd, _config.InvokeKey);
+            await SendKey(hWnd, _config.WexKey);
+            await SendKey(hWnd, _config.WexKey);
+            await SendKey(hWnd, _config.WexKey);
         }
         public async Task CastSunStrike(IntPtr hWnd)
         {
@@ -45,6 +47,9 @@ namespace KeyforgeDota
             await SendKey(hWnd, _config.ExortKey);
             await SendKey(hWnd, _config.ExortKey);
             await SendKey(hWnd, _config.InvokeKey);
+            await SendKey(hWnd, _config.WexKey);
+            await SendKey(hWnd, _config.WexKey);
+            await SendKey(hWnd, _config.WexKey);
         }
         public async Task CastTornado(IntPtr hWnd)
         {
@@ -52,6 +57,9 @@ namespace KeyforgeDota
             await SendKey(hWnd, _config.WexKey);
             await SendKey(hWnd, _config.QuasKey);
             await SendKey(hWnd, _config.InvokeKey);
+            await SendKey(hWnd, _config.WexKey);
+            await SendKey(hWnd, _config.WexKey);
+            await SendKey(hWnd, _config.WexKey);
         }
         public async Task CastChaosMeteor(IntPtr hWnd)
         {
@@ -59,6 +67,9 @@ namespace KeyforgeDota
             await SendKey(hWnd, _config.ExortKey);
             await SendKey(hWnd, _config.WexKey);
             await SendKey(hWnd, _config.InvokeKey);
+            await SendKey(hWnd, _config.WexKey);
+            await SendKey(hWnd, _config.WexKey);
+            await SendKey(hWnd, _config.WexKey);
         }
         public async Task CastDeafeningBlast(IntPtr hWnd)
         {
@@ -66,6 +77,9 @@ namespace KeyforgeDota
             await SendKey(hWnd, _config.WexKey);
             await SendKey(hWnd, _config.ExortKey);
             await SendKey(hWnd, _config.InvokeKey);
+            await SendKey(hWnd, _config.WexKey);
+            await SendKey(hWnd, _config.WexKey);
+            await SendKey(hWnd, _config.WexKey);
         }
         public async Task CastIceWall(IntPtr hWnd)
         {
@@ -73,6 +87,9 @@ namespace KeyforgeDota
             await SendKey(hWnd, _config.QuasKey);
             await SendKey(hWnd, _config.ExortKey);
             await SendKey(hWnd, _config.InvokeKey);
+            await SendKey(hWnd, _config.WexKey);
+            await SendKey(hWnd, _config.WexKey);
+            await SendKey(hWnd, _config.WexKey);
         }
         public async Task CastGhostWalk(IntPtr hWnd)
         {
@@ -80,6 +97,9 @@ namespace KeyforgeDota
             await SendKey(hWnd, _config.QuasKey);
             await SendKey(hWnd, _config.WexKey);
             await SendKey(hWnd, _config.InvokeKey);
+            await SendKey(hWnd, _config.WexKey);
+            await SendKey(hWnd, _config.WexKey);
+            await SendKey(hWnd, _config.WexKey);
         }
         public async Task CastPanicGhostWalk(IntPtr hWnd)
         {
@@ -87,6 +107,9 @@ namespace KeyforgeDota
             await SendKey(hWnd, _config.QuasKey);
             await SendKey(hWnd, _config.WexKey);
             await SendKey(hWnd, _config.InvokeKey);
+            await SendKey(hWnd, _config.WexKey);
+            await SendKey(hWnd, _config.WexKey);
+            await SendKey(hWnd, _config.WexKey);
             await SendKey(hWnd, _config.FirstSpellKey);
         }
         public async Task CastAlacrity(IntPtr hWnd)
@@ -95,6 +118,9 @@ namespace KeyforgeDota
             await SendKey(hWnd, _config.WexKey);
             await SendKey(hWnd, _config.ExortKey);
             await SendKey(hWnd, _config.InvokeKey);
+            await SendKey(hWnd, _config.WexKey);
+            await SendKey(hWnd, _config.WexKey);
+            await SendKey(hWnd, _config.WexKey);
         }
         public async Task CastForgeSpirit(IntPtr hWnd)
         {
@@ -102,6 +128,9 @@ namespace KeyforgeDota
             await SendKey(hWnd, _config.ExortKey);
             await SendKey(hWnd, _config.QuasKey);
             await SendKey(hWnd, _config.InvokeKey);
+            await SendKey(hWnd, _config.WexKey);
+            await SendKey(hWnd, _config.WexKey);
+            await SendKey(hWnd, _config.WexKey);
         }
     }
 }
