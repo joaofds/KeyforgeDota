@@ -23,8 +23,6 @@ public class AppConfig
     [JsonIgnore]
     public static string ConfigPath => Path.Combine(AppContext.BaseDirectory, "config.json");
 
-    [JsonIgnore]
-    public static string KeyCombosPath => Path.Combine(AppContext.BaseDirectory, "config_keys.json");
 
     public void Save()
     {
@@ -34,21 +32,6 @@ public class AppConfig
         File.WriteAllText(ConfigPath, json);
     }
 
-    // Novo: Carregar combinações de teclas do arquivo config_keys.json
-    public void LoadKeyCombos()
-    {
-        try
-        {
-            if (File.Exists(KeyCombosPath))
-            {
-                var json = File.ReadAllText(KeyCombosPath);
-                var dict = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(json);
-                if (dict != null)
-                    KeyCombos = dict;
-            }
-        }
-        catch { }
-    }
 
     public static AppConfig Load()
     {
@@ -58,13 +41,10 @@ public class AppConfig
             {
                 var json = File.ReadAllText(ConfigPath);
                 var config = JsonSerializer.Deserialize<AppConfig>(json) ?? new AppConfig();
-                config.LoadKeyCombos();
                 return config;
             }
         }
         catch { }
-        var cfg = new AppConfig();
-        cfg.LoadKeyCombos();
-        return cfg;
+        return new AppConfig();
     }
 }

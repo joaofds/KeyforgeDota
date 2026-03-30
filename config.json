@@ -1,0 +1,22 @@
+{
+  "WindowName": "Dota 2",
+  "QuasKey": "q",
+  "WexKey": "w",
+  "ExortKey": "e",
+  "InvokeKey": "r",
+  "FirstSpellKey": "d",
+  "SecondSpellKey": "f",
+  "KeyCombos": {
+    "coldsnap": ["space+q"],
+    "emp": ["space+w"],
+    "sunstrike": ["space+e"],
+    "tornado": ["space+t"],
+    "chaosmeteor": ["space+3"],
+    "deafeningblast": ["space+4"],
+    "icewall": ["space+v"],
+    "ghostwalk": ["space+b"],
+    "panicghostwalk": ["space+g"],
+    "alacrity": ["space+1"],
+    "forgespirit": ["space+f"]
+  }
+}
