@@ -28,7 +28,7 @@ public partial class ShortcutConfigWindow : Window
             })
         );
         DataContext = this;
-        var stack = this.FindControl<StackPanel>("ShortcutStack");
+        var stack = this.FindControl<StackPanel>("ShortcutStack")!;
         stack.Children.Clear();
         foreach (var shortcut in Shortcuts)
         {
@@ -51,11 +51,11 @@ public partial class ShortcutConfigWindow : Window
             row.Children.Add(hotkey2);
             stack.Children.Add(row);
         }
-        var btnSalvar = this.FindControl<Button>("BtnSalvar");
+        var btnSalvar = this.FindControl<Button>("BtnSalvar")!;
         btnSalvar.Click += BtnSalvar_Click;
-        var btnCancelar = this.FindControl<Button>("BtnCancelar");
+        var btnCancelar = this.FindControl<Button>("BtnCancelar")!;
         btnCancelar.Click += (_, __) => Close();
-        var btnFechar = this.FindControl<Button>("BtnFechar");
+        var btnFechar = this.FindControl<Button>("BtnFechar")!;
         btnFechar.Click += (_, __) => Close();
 
         // Ao criar cada HotkeyCaptureBox, garantir que o texto inicial reflete o atalho salvo
