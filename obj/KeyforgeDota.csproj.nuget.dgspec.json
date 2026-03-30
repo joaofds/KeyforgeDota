@@ -59,6 +59,8 @@
               "version": "[11.3.11, )"
             },
             "Avalonia.Diagnostics": {
+              "include": "None",
+              "suppressParent": "All",
               "target": "Package",
               "version": "[11.3.11, )"
             },
