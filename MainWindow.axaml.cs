@@ -11,6 +11,7 @@ namespace KeyforgeDota;
 public partial class MainWindow : Window
 {
     private AppConfig Config;
+    private ComboRunner _comboRunner;
 
     // Novo: Mapeamento reverso para busca rápida
     private Dictionary<string, string> ComboToAbility = new();
@@ -24,6 +25,8 @@ public partial class MainWindow : Window
         AttachControls();
         AttachEvents();
         LoadConfigToUI();
+
+        _comboRunner = new ComboRunner(Config, s => { }, s => { }, SendKeyToWindow);
 
         // Inicia hook global de teclado (WinAPI)
         _keyboardHook = new KeyboardHookWin();
@@ -79,17 +82,17 @@ public partial class MainWindow : Window
         }
         switch (ability.ToLower())
         {
-            case "tornado": await CastTornado(hWnd); break;
-            case "emp": await CastEMP(hWnd); break;
-            case "coldsnap": await CastColdSnap(hWnd); break;
-            case "sunstrike": await CastSunStrike(hWnd); break;
-            case "chaosmeteor": await CastChaosMeteor(hWnd); break;
-            case "deafeningblast": await CastDeafeningBlast(hWnd); break;
-            case "icewall": await CastIceWall(hWnd); break;
-            case "ghostwalk": await CastGhostWalk(hWnd); break;
-            case "panicghostwalk": await CastPanicGhostWalk(hWnd); break;
-            case "alacrity": await CastAlacrity(hWnd); break;
-            case "forgespirit": await CastForgeSpirit(hWnd); break;
+            case "tornado": await _comboRunner.CastTornado(hWnd); break;
+            case "emp": await _comboRunner.CastEMP(hWnd); break;
+            case "coldsnap": await _comboRunner.CastColdSnap(hWnd); break;
+            case "sunstrike": await _comboRunner.CastSunStrike(hWnd); break;
+            case "chaosmeteor": await _comboRunner.CastChaosMeteor(hWnd); break;
+            case "deafeningblast": await _comboRunner.CastDeafeningBlast(hWnd); break;
+            case "icewall": await _comboRunner.CastIceWall(hWnd); break;
+            case "ghostwalk": await _comboRunner.CastGhostWalk(hWnd); break;
+            case "panicghostwalk": await _comboRunner.CastPanicGhostWalk(hWnd); break;
+            case "alacrity": await _comboRunner.CastAlacrity(hWnd); break;
+            case "forgespirit": await _comboRunner.CastForgeSpirit(hWnd); break;
             default:
                 SetStatus($"Habilidade '{ability}' não implementada.", error: true);
                 break;
@@ -153,17 +156,17 @@ public partial class MainWindow : Window
 
     private void AttachEvents()
     {
-        this.FindControl<Button>("ColdSnapBtn").Click += async (_, __) => await RunComboAsync(CastColdSnap);
-        this.FindControl<Button>("EMPBtn").Click += async (_, __) => await RunComboAsync(CastEMP);
-        this.FindControl<Button>("SunStrikeBtn").Click += async (_, __) => await RunComboAsync(CastSunStrike);
-        this.FindControl<Button>("TornadoBtn").Click += async (_, __) => await RunComboAsync(CastTornado);
-        this.FindControl<Button>("ChaosMeteorBtn").Click += async (_, __) => await RunComboAsync(CastChaosMeteor);
-        this.FindControl<Button>("DeafeningBlastBtn").Click += async (_, __) => await RunComboAsync(CastDeafeningBlast);
-        this.FindControl<Button>("IceWallBtn").Click += async (_, __) => await RunComboAsync(CastIceWall);
-        this.FindControl<Button>("GhostWalkBtn").Click += async (_, __) => await RunComboAsync(CastGhostWalk);
-        this.FindControl<Button>("PanicGhostWalkBtn").Click += async (_, __) => await RunComboAsync(CastPanicGhostWalk);
-        this.FindControl<Button>("AlacrityBtn").Click += async (_, __) => await RunComboAsync(CastAlacrity);
-        this.FindControl<Button>("ForgeSpiritBtn").Click += async (_, __) => await RunComboAsync(CastForgeSpirit);
+        this.FindControl<Button>("ColdSnapBtn").Click += async (_, __) => await RunComboAsync(_comboRunner.CastColdSnap);
+        this.FindControl<Button>("EMPBtn").Click += async (_, __) => await RunComboAsync(_comboRunner.CastEMP);
+        this.FindControl<Button>("SunStrikeBtn").Click += async (_, __) => await RunComboAsync(_comboRunner.CastSunStrike);
+        this.FindControl<Button>("TornadoBtn").Click += async (_, __) => await RunComboAsync(_comboRunner.CastTornado);
+        this.FindControl<Button>("ChaosMeteorBtn").Click += async (_, __) => await RunComboAsync(_comboRunner.CastChaosMeteor);
+        this.FindControl<Button>("DeafeningBlastBtn").Click += async (_, __) => await RunComboAsync(_comboRunner.CastDeafeningBlast);
+        this.FindControl<Button>("IceWallBtn").Click += async (_, __) => await RunComboAsync(_comboRunner.CastIceWall);
+        this.FindControl<Button>("GhostWalkBtn").Click += async (_, __) => await RunComboAsync(_comboRunner.CastGhostWalk);
+        this.FindControl<Button>("PanicGhostWalkBtn").Click += async (_, __) => await RunComboAsync(_comboRunner.CastPanicGhostWalk);
+        this.FindControl<Button>("AlacrityBtn").Click += async (_, __) => await RunComboAsync(_comboRunner.CastAlacrity);
+        this.FindControl<Button>("ForgeSpiritBtn").Click += async (_, __) => await RunComboAsync(_comboRunner.CastForgeSpirit);
     }
 
     private void UpdateConfigFromUI()
@@ -232,111 +235,12 @@ public partial class MainWindow : Window
     }
 
     // ========== COMBOS ==========
-    private async Task CastColdSnap(IntPtr hWnd)
-    {
-        await AllQuas(hWnd);
-        await SendKey(hWnd, Config.InvokeKey);
-        await AllWex(hWnd);
-    }
-    private async Task CastEMP(IntPtr hWnd)
-    {
-        await AllWex(hWnd);
-        await SendKey(hWnd, Config.InvokeKey);
-        await AllWex(hWnd);
-    }
-    private async Task CastSunStrike(IntPtr hWnd)
-    {
-        await AllExort(hWnd);
-        await SendKey(hWnd, Config.InvokeKey);
-        await AllWex(hWnd);
-    }
-    private async Task CastTornado(IntPtr hWnd)
-    {
-        await SendKey(hWnd, Config.WexKey);
-        await SendKey(hWnd, Config.WexKey);
-        await SendKey(hWnd, Config.QuasKey);
-        await SendKey(hWnd, Config.InvokeKey);
-        await AllWex(hWnd);
-    }
-    private async Task CastChaosMeteor(IntPtr hWnd)
-    {
-        await SendKey(hWnd, Config.ExortKey);
-        await SendKey(hWnd, Config.ExortKey);
-        await SendKey(hWnd, Config.WexKey);
-        await SendKey(hWnd, Config.InvokeKey);
-        await AllWex(hWnd);
-    }
-    private async Task CastDeafeningBlast(IntPtr hWnd)
-    {
-        await SendKey(hWnd, Config.QuasKey);
-        await SendKey(hWnd, Config.WexKey);
-        await SendKey(hWnd, Config.ExortKey);
-        await SendKey(hWnd, Config.InvokeKey);
-        await AllWex(hWnd);
-    }
-    private async Task CastIceWall(IntPtr hWnd)
-    {
-        await SendKey(hWnd, Config.QuasKey);
-        await SendKey(hWnd, Config.QuasKey);
-        await SendKey(hWnd, Config.ExortKey);
-        await SendKey(hWnd, Config.InvokeKey);
-        await AllWex(hWnd);
-    }
-    private async Task CastGhostWalk(IntPtr hWnd)
-    {
-        await SendKey(hWnd, Config.QuasKey);
-        await SendKey(hWnd, Config.QuasKey);
-        await SendKey(hWnd, Config.WexKey);
-        await SendKey(hWnd, Config.InvokeKey);
-        await AllWex(hWnd);
-    }
-    private async Task CastPanicGhostWalk(IntPtr hWnd)
-    {
-        await CastGhostWalk(hWnd);
-        await SendKey(hWnd, Config.FirstSpellKey);
-    }
-    private async Task CastAlacrity(IntPtr hWnd)
-    {
-        await SendKey(hWnd, Config.WexKey);
-        await SendKey(hWnd, Config.WexKey);
-        await SendKey(hWnd, Config.ExortKey);
-        await SendKey(hWnd, Config.InvokeKey);
-        await AllWex(hWnd);
-    }
-    private async Task CastForgeSpirit(IntPtr hWnd)
-    {
-        await SendKey(hWnd, Config.ExortKey);
-        await SendKey(hWnd, Config.ExortKey);
-        await SendKey(hWnd, Config.QuasKey);
-        await SendKey(hWnd, Config.InvokeKey);
-        await AllWex(hWnd);
-    }
-
-    // ========== SEQUÊNCIAS AUXILIARES ==========
-    private async Task AllQuas(IntPtr hWnd)
-    {
-        await SendKey(hWnd, Config.QuasKey);
-        await SendKey(hWnd, Config.QuasKey);
-        await SendKey(hWnd, Config.QuasKey);
-    }
-    private async Task AllWex(IntPtr hWnd)
-    {
-        await SendKey(hWnd, Config.WexKey);
-        await SendKey(hWnd, Config.WexKey);
-        await SendKey(hWnd, Config.WexKey);
-    }
-    private async Task AllExort(IntPtr hWnd)
-    {
-        await SendKey(hWnd, Config.ExortKey);
-        await SendKey(hWnd, Config.ExortKey);
-        await SendKey(hWnd, Config.ExortKey);
-    }
 
     // ========== ENVIO DE TECLAS ==========
     private async Task SendKey(IntPtr hWnd, string key)
     {
         if (string.IsNullOrWhiteSpace(key)) return;
-        SendKeyToWindow(hWnd, key);
+        SendKeyToWindow(hWnd, key, 0);
         await Task.Delay(20); // Pequeno delay entre teclas
     }
 
@@ -355,7 +259,7 @@ public partial class MainWindow : Window
         return FindWindow(null, title);
     }
 
-    private void SendKeyToWindow(IntPtr hWnd, string key)
+    private void SendKeyToWindow(IntPtr hWnd, string key, ushort extra)
     {
         var vk = KeyToVirtualKey(key);
         if (vk == 0) return;
