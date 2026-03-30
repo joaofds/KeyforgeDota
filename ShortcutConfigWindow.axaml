@@ -3,13 +3,13 @@
         xmlns:local="clr-namespace:KeyforgeDota"
         x:Class="KeyforgeDota.ShortcutConfigWindow"
         Title="Configurar Atalhos"
-        Width="520" Height="560" MinWidth="400" MinHeight="400"
+        Width="500" Height="500" MinWidth="400" MinHeight="400"
         WindowStartupLocation="CenterOwner">
     <Border Background="#23272F" CornerRadius="12" Padding="8">
         <StackPanel Spacing="0">
             <StackPanel Name="ShortcutStack" />
             <TextBlock Name="StatusText" Text="" Foreground="#43B581" FontWeight="SemiBold" Margin="0,0,0,0"/>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="12" Margin="0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="12" Margin="56,0,0,0">
                 <Button Name="BtnSalvar" Content="Salvar" Background="#5865F2" Foreground="White" Padding="16,6" MinWidth="80"/>
                 <Button Name="BtnCancelar" Content="Cancelar" Background="#2C2F36" Foreground="#F5F6FA" Padding="16,6" MinWidth="80"/>
                 <Button Name="BtnFechar" Content="Fechar" Background="#2C2F36" Foreground="#F5F6FA" Padding="16,6" MinWidth="80"/>
