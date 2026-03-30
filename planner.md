@@ -15,9 +15,9 @@ Deixar o programa de macro para Invoker em Dota 2 o mais genérico possível, pe
 8. (Opcional) Criar interface para edição de perfis.
 
 ## Progresso
-- [ ] 1. Análise do código
-- [ ] 2. Definição do formato de configuração
-- [ ] 3. Implementação da leitura dinâmica
+- [x] 1. Análise do código
+- [x] 2. Definição do formato de configuração
+- [x] 3. Implementação da leitura dinâmica
 - [ ] 4. Abstração de entrada
 - [ ] 5. Adaptação da lógica principal
 - [ ] 6. Suporte a múltiplos perfis
@@ -27,3 +27,31 @@ Deixar o programa de macro para Invoker em Dota 2 o mais genérico possível, pe
 ## Observações
 - Este arquivo será atualizado a cada etapa concluída ou alterada.
 - Sugestões e decisões de design serão registradas aqui.
+
+---
+
+## NOVA TAREFA: Atalhos Dinâmicos para o Usuário
+
+### Requisitos
+1. Remover todos os botões de habilidades da tela inicial para deixar a interface mais limpa.
+2. Adicionar um botão flutuante no canto inferior direito da janela principal. Este botão abre uma nova janela de configuração de atalhos.
+3. A janela de configuração exibe uma tabela/lista, onde cada linha representa uma habilidade do Invoker e permite ao usuário escolher até dois atalhos para cada uma.
+4. Para cada atalho, o usuário poderá gravar a combinação de teclas pressionando-as (não será uma simples caixa de texto, mas um capturador de hotkey).
+5. As alterações feitas pelo usuário são salvas dinamicamente no config.json, refletindo imediatamente no funcionamento dos combos.
+
+### Etapas de Implementação
+- [x] Remover botões de habilidades da tela inicial (MainWindow.axaml).
+- [x] Adicionar botão flutuante de "Configurar Atalhos" no canto inferior direito.
+- [x] Criar nova janela (ShortcutConfigWindow) com tabela de habilidades e campos de captura de hotkey.
+- [x] Implementar controle de captura de hotkey para cada campo de atalho (HotkeyCaptureBox).
+- [x] Salvar alterações no config.json e atualizar o AppConfig em tempo real.
+- [x] Garantir que a interface seja responsiva e intuitiva.
+
+---
+
+## Status: IMPLEMENTAÇÃO CONCLUÍDA
+
+- Atalhos dinâmicos configuráveis pelo usuário.
+- Botão flutuante para abrir janela de configuração.
+- Captura de hotkeys sem caixa de texto.
+- Alterações persistidas em config.json e refletidas no app.

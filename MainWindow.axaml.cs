@@ -26,9 +26,20 @@ public partial class MainWindow : Window
         AttachEvents();
         LoadConfigToUI();
 
+        // Botão de configuração de atalhos
+        this.FindControl<Button>("OpenShortcutConfigBtn").Click += OpenShortcutConfigBtn_Click;
+
         // Inicia hook global de teclado (WinAPI)
         _keyboardHook = new KeyboardHookWin();
         _keyboardHook.OnComboPressed += KeyboardHook_OnComboPressed;
+    }
+
+    private void OpenShortcutConfigBtn_Click(object? sender, RoutedEventArgs e)
+    {
+        var win = new ShortcutConfigWindow(Config);
+        win.ShowDialog(this);
+        // Após fechar, recarrega combos em memória
+        BuildComboToAbilityMap();
     }
 
     protected override void OnClosed(EventArgs e)
@@ -158,17 +169,7 @@ public partial class MainWindow : Window
 
     private void AttachEvents()
     {
-        this.FindControl<Button>("ColdSnapBtn").Click += async (_, __) => await DispararHabilidade("coldsnap");
-        this.FindControl<Button>("EMPBtn").Click += async (_, __) => await DispararHabilidade("emp");
-        this.FindControl<Button>("SunStrikeBtn").Click += async (_, __) => await DispararHabilidade("sunstrike");
-        this.FindControl<Button>("TornadoBtn").Click += async (_, __) => await DispararHabilidade("tornado");
-        this.FindControl<Button>("ChaosMeteorBtn").Click += async (_, __) => await DispararHabilidade("chaosmeteor");
-        this.FindControl<Button>("DeafeningBlastBtn").Click += async (_, __) => await DispararHabilidade("deafeningblast");
-        this.FindControl<Button>("IceWallBtn").Click += async (_, __) => await DispararHabilidade("icewall");
-        this.FindControl<Button>("GhostWalkBtn").Click += async (_, __) => await DispararHabilidade("ghostwalk");
-        this.FindControl<Button>("PanicGhostWalkBtn").Click += async (_, __) => await DispararHabilidade("panicghostwalk");
-        this.FindControl<Button>("AlacrityBtn").Click += async (_, __) => await DispararHabilidade("alacrity");
-        this.FindControl<Button>("ForgeSpiritBtn").Click += async (_, __) => await DispararHabilidade("forgespirit");
+        // Nenhum botão de habilidade para registrar eventos
     }
 
     private void UpdateConfigFromUI()

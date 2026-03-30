@@ -1,0 +1,9 @@
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at KeyforgeDota.MainWindow.AttachEvents() in E:\projetos\cs\KeyforgeDota\MainWindow.axaml.cs:line 172
+   at KeyforgeDota.MainWindow..ctor() in E:\projetos\cs\KeyforgeDota\MainWindow.axaml.cs:line 26
+   at KeyforgeDota.App.OnFrameworkInitializationCompleted() in E:\projetos\cs\KeyforgeDota\App.axaml.cs:line 18
+   at Avalonia.AppBuilder.SetupUnsafe()
+   at Avalonia.AppBuilder.Setup()
+   at Avalonia.AppBuilder.SetupWithLifetime(IApplicationLifetime lifetime)
+   at Avalonia.ClassicDesktopStyleApplicationLifetimeExtensions.StartWithClassicDesktopLifetime(AppBuilder builder, String[] args, Action`1 lifetimeBuilder)
+   at KeyforgeDota.Program.Main(String[] args) in E:\projetos\cs\KeyforgeDota\Program.cs:line 16

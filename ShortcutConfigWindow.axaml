@@ -1,0 +1,36 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:KeyforgeDota"
+        x:Class="KeyforgeDota.ShortcutConfigWindow"
+        Title="Configurar Atalhos"
+        Width="520" Height="480" MinWidth="400" MinHeight="320"
+        WindowStartupLocation="CenterOwner">
+    <Border Background="#23272F" CornerRadius="12" Padding="24">
+        <StackPanel Spacing="18">
+            <TextBlock Text="Configuração de Atalhos do Invoker" FontSize="22" Foreground="#F5F6FA" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <DataGrid x:Name="ShortcutGrid" AutoGenerateColumns="False" HeadersVisibility="Column" GridLinesVisibility="None" Background="#23272F" Foreground="#F5F6FA" RowBackground="#23272F" BorderBrush="#2C2F36" BorderThickness="1">
+                <DataGrid.Columns>
+                    <!-- Coluna de habilidade será adicionada via código para evitar erro de binding compilado -->
+                    <DataGridTemplateColumn Header="Atalho 1" Width="120">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate DataType="{x:Type local:AbilityShortcut}">
+                                <local:HotkeyCaptureBox Hotkey="{Binding Shortcut1, Mode=TwoWay}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Atalho 2" Width="120">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate DataType="{x:Type local:AbilityShortcut}">
+                                <local:HotkeyCaptureBox Hotkey="{Binding Shortcut2, Mode=TwoWay}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="12">
+                <Button Name="BtnSalvar" Content="Salvar" Background="#5865F2" Foreground="White" Padding="16,6" MinWidth="80"/>
+                <Button Name="BtnCancelar" Content="Cancelar" Background="#2C2F36" Foreground="#F5F6FA" Padding="16,6" MinWidth="80"/>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</Window>

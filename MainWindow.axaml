@@ -6,7 +6,8 @@
         x:Class="KeyforgeDota.MainWindow"
         Title="Keyforge Invoker Helper">
     <Border Background="#23272F" CornerRadius="12" Padding="24">
-        <StackPanel Spacing="18">
+        <Grid>
+            <StackPanel Spacing="18">
             <TextBlock Text="Keyforge Invoker Helper" FontSize="28" Foreground="#F5F6FA" FontWeight="Bold" HorizontalAlignment="Center"/>
             <TextBlock Text="Janela de destino (nome exato):" Foreground="#B0B3B8"/>
             <TextBox Name="WindowNameBox" Watermark="Ex: Dota 2" Background="#2C2F36" Foreground="#F5F6FA"/>
@@ -41,22 +42,22 @@
                 </StackPanel>
             </StackPanel>
 
-            <TextBlock Text="Combos rápidos:" Margin="0,8,0,0" Foreground="#B0B3B8"/>
-            <WrapPanel HorizontalAlignment="Center">
-                <Button Name="ColdSnapBtn" Content="Cold Snap" Background="#5865F2" Foreground="White" Padding="10,6" Margin="4"/>
-                <Button Name="EMPBtn" Content="EMP" Background="#5865F2" Foreground="White" Padding="10,6" Margin="4"/>
-                <Button Name="SunStrikeBtn" Content="Sun Strike" Background="#5865F2" Foreground="White" Padding="10,6" Margin="4"/>
-                <Button Name="TornadoBtn" Content="Tornado" Background="#5865F2" Foreground="White" Padding="10,6" Margin="4"/>
-                <Button Name="ChaosMeteorBtn" Content="Chaos Meteor" Background="#5865F2" Foreground="White" Padding="10,6" Margin="4"/>
-                <Button Name="DeafeningBlastBtn" Content="Deafening Blast" Background="#5865F2" Foreground="White" Padding="10,6" Margin="4"/>
-                <Button Name="IceWallBtn" Content="Ice Wall" Background="#5865F2" Foreground="White" Padding="10,6" Margin="4"/>
-                <Button Name="GhostWalkBtn" Content="Ghost Walk" Background="#5865F2" Foreground="White" Padding="10,6" Margin="4"/>
-                <Button Name="PanicGhostWalkBtn" Content="Panic Ghost Walk" Background="#F23F43" Foreground="White" Padding="10,6" Margin="4"/>
-                <Button Name="AlacrityBtn" Content="Alacrity" Background="#5865F2" Foreground="White" Padding="10,6" Margin="4"/>
-                <Button Name="ForgeSpiritBtn" Content="Forge Spirit" Background="#5865F2" Foreground="White" Padding="10,6" Margin="4"/>
-            </WrapPanel>
 
             <TextBlock Name="StatusText" Text="Pronto" Foreground="#43FF8E" FontWeight="SemiBold" Margin="0,16,0,0" HorizontalAlignment="Center"/>
-        </StackPanel>
+            </StackPanel>
+            <!-- Botão flutuante de configuração de atalhos -->
+            <Button Name="OpenShortcutConfigBtn"
+                    Width="56" Height="56"
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                    Margin="0,0,8,8"
+                    Background="#5865F2" Foreground="White"
+                    CornerRadius="28"
+                    ToolTip.Tip="Configurar Atalhos">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="⚡" FontSize="28" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Atalhos" FontSize="10" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+        </Grid>
     </Border>
 </Window>

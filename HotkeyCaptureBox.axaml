@@ -1,0 +1,7 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="KeyforgeDota.HotkeyCaptureBox">
+    <Border Background="#2C2F36" CornerRadius="6" Padding="6" BorderBrush="#5865F2" BorderThickness="1">
+        <TextBlock Name="HotkeyText" Text="Pressione..." Foreground="#F5F6FA" VerticalAlignment="Center"/>
+    </Border>
+</UserControl>

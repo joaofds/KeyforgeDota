@@ -26,5 +26,11 @@ build_property.EnableCodeStyleSeverity =
 [E:/projetos/cs/KeyforgeDota/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[E:/projetos/cs/KeyforgeDota/HotkeyCaptureBox.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [E:/projetos/cs/KeyforgeDota/MainWindow.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[E:/projetos/cs/KeyforgeDota/ShortcutConfigWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
