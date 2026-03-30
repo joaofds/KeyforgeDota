@@ -37,9 +37,15 @@ public partial class MainWindow : Window
     private void OpenShortcutConfigBtn_Click(object? sender, RoutedEventArgs e)
     {
         var win = new ShortcutConfigWindow(Config);
+        win.OnConfigSaved += () => {
+            Config = AppConfig.Load();
+            BuildComboToAbilityMap();
+            _comboRunner = new ComboRunner(Config);
+            _keyboardHook?.Dispose();
+            _keyboardHook = new KeyboardHookWin();
+            _keyboardHook.OnComboPressed += KeyboardHook_OnComboPressed;
+        };
         win.ShowDialog(this);
-        // Após fechar, recarrega combos em memória
-        BuildComboToAbilityMap();
     }
 
     protected override void OnClosed(EventArgs e)

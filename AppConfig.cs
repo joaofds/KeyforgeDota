@@ -37,14 +37,40 @@ public class AppConfig
     {
         try
         {
+            AppConfig config;
             if (File.Exists(ConfigPath))
             {
                 var json = File.ReadAllText(ConfigPath);
-                var config = JsonSerializer.Deserialize<AppConfig>(json) ?? new AppConfig();
-                return config;
+                config = JsonSerializer.Deserialize<AppConfig>(json) ?? new AppConfig();
             }
+            else
+            {
+                config = new AppConfig();
+            }
+
+            // Garante que todas as habilidades padrão estejam presentes
+            var habilidades = new[]
+            {
+                "coldsnap", "emp", "sunstrike", "tornado", "chaosmeteor", "deafeningblast",
+                "icewall", "ghostwalk", "panicghostwalk", "alacrity", "forgespirit"
+            };
+            foreach (var hab in habilidades)
+            {
+                if (!config.KeyCombos.ContainsKey(hab))
+                    config.KeyCombos[hab] = new List<string>();
+            }
+            return config;
         }
         catch { }
-        return new AppConfig();
+        // fallback
+        var fallback = new AppConfig();
+        var habilidades2 = new[]
+        {
+            "coldsnap", "emp", "sunstrike", "tornado", "chaosmeteor", "deafeningblast",
+            "icewall", "ghostwalk", "panicghostwalk", "alacrity", "forgespirit"
+        };
+        foreach (var hab in habilidades2)
+            fallback.KeyCombos[hab] = new List<string>();
+        return fallback;
     }
 }

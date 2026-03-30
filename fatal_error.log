@@ -1,9 +1,31 @@
 System.NullReferenceException: Object reference not set to an instance of an object.
-   at KeyforgeDota.MainWindow.AttachEvents() in E:\projetos\cs\KeyforgeDota\MainWindow.axaml.cs:line 172
-   at KeyforgeDota.MainWindow..ctor() in E:\projetos\cs\KeyforgeDota\MainWindow.axaml.cs:line 26
-   at KeyforgeDota.App.OnFrameworkInitializationCompleted() in E:\projetos\cs\KeyforgeDota\App.axaml.cs:line 18
-   at Avalonia.AppBuilder.SetupUnsafe()
-   at Avalonia.AppBuilder.Setup()
-   at Avalonia.AppBuilder.SetupWithLifetime(IApplicationLifetime lifetime)
+   at KeyforgeDota.ShortcutConfigWindow.AtualizarListaAtalhosSalvos() in E:\projetos\cs\KeyforgeDota\ShortcutConfigWindow.axaml.cs:line 71
+   at KeyforgeDota.ShortcutConfigWindow..ctor(AppConfig config) in E:\projetos\cs\KeyforgeDota\ShortcutConfigWindow.axaml.cs:line 62
+   at KeyforgeDota.MainWindow.OpenShortcutConfigBtn_Click(Object sender, RoutedEventArgs e) in E:\projetos\cs\KeyforgeDota\MainWindow.axaml.cs:line 39
+   at Avalonia.Interactivity.Interactive.<AddHandler>g__InvokeAdapter|8_0[TEventArgs](Delegate baseHandler, Object sender, RoutedEventArgs args)
+   at Avalonia.Interactivity.EventRoute.RaiseEventImpl(RoutedEventArgs e)
+   at Avalonia.Interactivity.EventRoute.RaiseEvent(Interactive source, RoutedEventArgs e)
+   at Avalonia.Interactivity.Interactive.RaiseEvent(RoutedEventArgs e)
+   at Avalonia.Controls.Button.OnClick()
+   at Avalonia.Controls.Button.OnPointerReleased(PointerReleasedEventArgs e)
+   at Avalonia.Input.InputElement.<>c.<.cctor>b__33_9(InputElement x, PointerReleasedEventArgs e)
+   at Avalonia.Reactive.LightweightObservableBase`1.PublishNext(T value)
+   at Avalonia.Interactivity.EventRoute.RaiseEventImpl(RoutedEventArgs e)
+   at Avalonia.Interactivity.EventRoute.RaiseEvent(Interactive source, RoutedEventArgs e)
+   at Avalonia.Interactivity.Interactive.RaiseEvent(RoutedEventArgs e)
+   at Avalonia.Input.MouseDevice.MouseUp(IMouseDevice device, UInt64 timestamp, IInputRoot root, Point p, PointerPointProperties props, KeyModifiers inputModifiers, IInputElement hitTest)
+   at Avalonia.Input.MouseDevice.ProcessRawEvent(RawPointerEventArgs e)
+   at Avalonia.Controls.TopLevel.<>c.<HandleInput>b__150_0(Object state)
+   at Avalonia.Threading.Dispatcher.Send(SendOrPostCallback action, Object arg, Nullable`1 priority)
+   at Avalonia.Controls.TopLevel.HandleInput(RawInputEventArgs e)
+   at Avalonia.Win32.WindowImpl.AppWndProc(IntPtr hWnd, UInt32 msg, IntPtr wParam, IntPtr lParam)
+   at Avalonia.Win32.WindowImpl.WndProcMessageHandler(IntPtr hWnd, UInt32 msg, IntPtr wParam, IntPtr lParam)
+   at Avalonia.Win32.Interop.UnmanagedMethods.DispatchMessage(MSG& lpmsg)
+   at Avalonia.Win32.Win32DispatcherImpl.RunLoop(CancellationToken cancellationToken)
+   at Avalonia.Threading.DispatcherFrame.Run(IControlledDispatcherImpl impl)
+   at Avalonia.Threading.Dispatcher.PushFrame(DispatcherFrame frame)
+   at Avalonia.Threading.Dispatcher.MainLoop(CancellationToken cancellationToken)
+   at Avalonia.Controls.ApplicationLifetimes.ClassicDesktopStyleApplicationLifetime.StartCore(String[] args)
+   at Avalonia.Controls.ApplicationLifetimes.ClassicDesktopStyleApplicationLifetime.Start(String[] args)
    at Avalonia.ClassicDesktopStyleApplicationLifetimeExtensions.StartWithClassicDesktopLifetime(AppBuilder builder, String[] args, Action`1 lifetimeBuilder)
    at KeyforgeDota.Program.Main(String[] args) in E:\projetos\cs\KeyforgeDota\Program.cs:line 16

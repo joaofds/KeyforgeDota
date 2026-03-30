@@ -38,7 +38,15 @@ public partial class HotkeyCaptureBox : UserControl
     {
         _capturing = true;
         _pressedKeys.Clear();
-        HotkeyText.Text = "Pressione...";
+        var textBlock = this.FindControl<TextBlock>("HotkeyText");
+        var border = this.FindControl<Border>("MainBorder");
+        if (textBlock != null)
+        {
+            textBlock.Text = "Aguardando...";
+            textBlock.Foreground = Avalonia.Media.Brushes.Gold;
+        }
+        if (border != null)
+            border.Background = Avalonia.Media.Brushes.DimGray;
         Focus();
     }
 
@@ -47,7 +55,15 @@ public partial class HotkeyCaptureBox : UserControl
         if (!_capturing) return;
         _pressedKeys.Add(e.Key);
         Hotkey = FormatHotkey(_pressedKeys);
-        HotkeyText.Text = Hotkey;
+        var textBlock = this.FindControl<TextBlock>("HotkeyText");
+        var border = this.FindControl<Border>("MainBorder");
+        if (textBlock != null)
+        {
+            textBlock.Text = Hotkey;
+            textBlock.Foreground = Avalonia.Media.Brushes.White;
+        }
+        if (border != null)
+            border.Background = Avalonia.Media.Brushes.ForestGreen;
         e.Handled = true;
         if (e.Key == Key.Enter || e.Key == Key.Tab)
         {
