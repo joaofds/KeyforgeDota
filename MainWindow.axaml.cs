@@ -8,13 +8,14 @@ using System.Collections.Generic;
 
 namespace KeyforgeDota;
 
+
 public partial class MainWindow : Window
 {
     private AppConfig Config;
-
     // Novo: Mapeamento reverso para busca rápida
     private Dictionary<string, string> ComboToAbility = new();
     private KeyboardHookWin? _keyboardHook;
+    private bool _isEnabled = true; // Estado global do app
 
     public MainWindow()
     {
@@ -55,8 +56,19 @@ public partial class MainWindow : Window
     }
 
     // Handler para combos globais
+
     private void KeyboardHook_OnComboPressed(HashSet<int> pressedKeys)
     {
+        // VK_PAUSE = 0x13 = 19
+        if (pressedKeys.Contains(0x13))
+        {
+            _isEnabled = !_isEnabled;
+            SetStatus(_isEnabled ? "Atalhos ativados (Pause)" : "Atalhos desativados (Pause)", error: !_isEnabled);
+            pressedKeys.Clear(); // evita múltiplos toggles
+            return;
+        }
+        if (!_isEnabled)
+            return;
         var combo = KeysToComboString(pressedKeys);
         var ability = GetAbilityForCombo(combo);
         if (ability != null)

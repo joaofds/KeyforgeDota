@@ -29,6 +29,15 @@ Aplicativo desktop para automatizar combos do Invoker no Dota 2, com configuraç
 
 ---
 
+## NOVO: Interruptor Global (Pause Break)
+- Agora o app possui um modo liga/desliga global usando a tecla Pause Break.
+- Ao pressionar Pause Break, todos os atalhos do app são ativados ou desativados instantaneamente.
+- O status é exibido na interface principal.
+- Implementação robusta: funciona mesmo se Pause for pressionada junto com outras teclas.
+- Corrigido conflito de mapeamento da tecla "r" para garantir funcionamento correto do toggle.
+
+---
+
 ## Status: IMPLEMENTAÇÃO CONCLUÍDA
 
 - Atalhos dinâmicos configuráveis pelo usuário.
