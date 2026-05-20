@@ -61,8 +61,6 @@ AppConfig.cs
 ComboRunner.cs
 HotkeyCaptureBox.axaml.cs
 KeyboardHookWin.cs
-KeyMapper.cs
-KeySender.cs
 MainWindow.axaml.cs
 obj/Debug/net10.0/
  .NETCoreApp,Version=v10.0.AssemblyAttributes.cs

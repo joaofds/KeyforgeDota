@@ -54,25 +54,12 @@ Aplicativo desktop para automatizar combos do Invoker no Dota 2, com configuraç
 
 ### 🟠 ALTO — Dead code, duplicação e lógica incorreta
 
-- [ ] **`KeySender.cs` é dead code — deletar**
-  - A classe nunca é instanciada ou chamada em nenhum lugar do projeto.
-
-- [ ] **`KeyMapper.cs` é dead code — deletar ou integrar**
-  - Nenhum arquivo usa `TryGetScancode` ou `TryGetVirtualKey`.
-  - `ComboRunner` e `MainWindow` têm `KeyToVirtualKey` próprio e limitado.
-  - Melhor: consolidar e usar `KeyMapper` de verdade para suportar teclas especiais.
-
-- [ ] **Scancode errado para 'R' em `KeyMapper`**
-  - Arquivo: `KeyMapper.cs:11`
-  - `{"r", 0x52}` — scancode de R é `0x13`, não `0x52` (0x52 é o VK_R, não scancode).
-  - `ScancodeToVK` reflete o erro: `{0x52, 0x52}`.
-  - Correção: `{"r", 0x13}` e `{0x13, 0x52}`.
-
-- [ ] **Código WinAPI duplicado entre `MainWindow` e `ComboRunner`**
-  - Arquivo: `MainWindow.axaml.cs:257-288`
-  - `SendKeyToWindow`, `KeyToVirtualKey`, `PostMessage`, `WM_KEYDOWN/WM_KEYUP` existem em ambos.
-  - Com combos delegados ao `ComboRunner`, o bloco em `MainWindow` é lixo.
-  - Correção: remover o bloco de `MainWindow` e centralizar em `ComboRunner` (ou classe utilitária).
+- [x] **`KeySender.cs` é dead code — deletar** — arquivo removido.
+- [x] **`KeyMapper.cs` é dead code — deletar** — arquivo removido. Será reescrito corretamente ao resolver o item 8.
+- [x] **Scancode errado para 'R' em `KeyMapper`** — resolvido junto com a remoção do arquivo.
+- [x] **Código WinAPI duplicado entre `MainWindow` e `ComboRunner`**
+  - Removidos `SendKeyToWindow`, `KeyToVirtualKey`, `PostMessage`, `WM_KEYDOWN/WM_KEYUP` de `MainWindow`.
+  - Mantido apenas `FindWindow` / `FindWindowByTitle` (ainda necessários).
 
 - [ ] **`ComboRunner.KeyToVirtualKey` não suporta teclas especiais**
   - Arquivo: `ComboRunner.cs:133-139`

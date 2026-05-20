@@ -254,39 +254,9 @@ public partial class MainWindow : Window
         }
     }
 
-    // Toda a lógica de combos foi movida para ComboRunner
-
     // ========== WIN32 API ==========
     [DllImport("user32.dll", SetLastError = true)]
     private static extern IntPtr FindWindow(string? lpClassName, string? lpWindowName);
 
-    [DllImport("user32.dll")]
-    private static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
-
-    private const uint WM_KEYDOWN = 0x0100;
-    private const uint WM_KEYUP = 0x0101;
-
-    private IntPtr FindWindowByTitle(string title)
-    {
-        return FindWindow(null, title);
-    }
-
-    private void SendKeyToWindow(IntPtr hWnd, string key)
-    {
-        var vk = KeyToVirtualKey(key);
-        if (vk == 0) return;
-        PostMessage(hWnd, WM_KEYDOWN, (IntPtr)vk, IntPtr.Zero);
-        PostMessage(hWnd, WM_KEYUP, (IntPtr)vk, IntPtr.Zero);
-    }
-
-    private int KeyToVirtualKey(string key)
-    {
-        // Suporte básico para letras e números
-        if (string.IsNullOrEmpty(key)) return 0;
-        char c = char.ToLowerInvariant(key[0]);
-        if (c >= 'a' && c <= 'z') return c - 'a' + 0x41;
-        if (c >= '0' && c <= '9') return c - '0' + 0x30;
-        // Adicione mais teclas se necessário
-        return 0;
-    }
+    private IntPtr FindWindowByTitle(string title) => FindWindow(null, title);
 }
