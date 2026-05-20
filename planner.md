@@ -65,7 +65,7 @@ Aplicativo desktop para automatizar combos do Invoker no Dota 2, com configuraç
   - `KeyMapper.cs` reescrito com mapeamento correto nome → VK (letras, números, space, f1-f12, modificadores).
   - `ComboRunner.KeyToVirtualKey` delegado ao `KeyMapper.TryGetVirtualKey`.
 
-- [ ] **`AtualizarListaAtalhosSalvos` é método vazio ainda chamado**
+- [x] **`AtualizarListaAtalhosSalvos` é método vazio ainda chamado**
   - Arquivo: `ShortcutConfigWindow.axaml.cs:85-88`
   - Remover o método e sua chamada em `BtnSalvar_Click`.
 

@@ -82,11 +82,6 @@ public partial class ShortcutConfigWindow : Window
         }
     }
 
-    private void AtualizarListaAtalhosSalvos()
-    {
-        // Método agora não faz nada (mantido para compatibilidade)
-    }
-
     private void BtnSalvar_Click(object? sender, RoutedEventArgs e)
     {
         try
@@ -100,7 +95,6 @@ public partial class ShortcutConfigWindow : Window
                 }.Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
             }
             _config.Save();
-            AtualizarListaAtalhosSalvos();
             // Feedback popup de sucesso
             _ = AlertPopup.Show(this, "Configurações salvas com sucesso!", true);
             OnConfigSaved?.Invoke();
