@@ -179,9 +179,6 @@ public partial class MainWindow : Window
         InvokeKeyBox!.LostFocus += (_, __) => SaveConfigFromUI();
         FirstSpellKeyBox!.LostFocus += (_, __) => SaveConfigFromUI();
         SecondSpellKeyBox!.LostFocus += (_, __) => SaveConfigFromUI();
-        WexKeyBox!.LostFocus += (_, __) => SaveConfigFromUI();
-        ExortKeyBox!.LostFocus += (_, __) => SaveConfigFromUI();
-        InvokeKeyBox!.LostFocus += (_, __) => SaveConfigFromUI();
     }
 
     private void AttachEvents()

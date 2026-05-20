@@ -40,7 +40,7 @@ Aplicativo desktop para automatizar combos do Invoker no Dota 2, com configuraç
   - Problema: qualquer JSON corrompido apaga a config do usuário sem aviso.
   - Correção: logar o erro e mostrar mensagem ao usuário antes de usar fallback.
 
-- [ ] **Handlers de evento duplicados em `AttachControls`**
+- [x] **Handlers de evento duplicados em `AttachControls`**
   - Arquivo: `MainWindow.axaml.cs:174-181`
   - Problema: `WexKeyBox`, `ExortKeyBox` e `InvokeKeyBox` registram `LostFocus += SaveConfigFromUI` duas vezes cada, causando duplo salvamento.
   - Correção: remover as três linhas duplicadas (179, 180, 181).
