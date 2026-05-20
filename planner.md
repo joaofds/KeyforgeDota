@@ -17,9 +17,8 @@ Aplicativo desktop para automatizar combos do Invoker no Dota 2, com configuraç
 - ShortcutConfigWindow.axaml/cs: janela de configuração dinâmica de atalhos.
 - HotkeyCaptureBox.axaml/cs: captura de hotkeys.
 - AppConfig.cs: leitura/escrita do config.json.
-- ComboRunner.cs: lógica de combos e envio de teclas (ativo).
-- KeyMapper.cs: mapeamento scancode/VK — DEAD CODE (nunca usado).
-- KeySender.cs: envio de teclas — DEAD CODE (nunca usado).
+- ComboRunner.cs: lógica de combos e envio de teclas.
+- KeyMapper.cs: mapeamento nome → VK code (reescrito corretamente).
 - config.json: configuração persistente.
 
 ### Fluxo do usuário
@@ -31,103 +30,39 @@ Aplicativo desktop para automatizar combos do Invoker no Dota 2, com configuraç
 
 ---
 
-## BACKLOG DE MELHORIAS E CORREÇÕES
+## LISTA DE CORREÇÕES
 
-### 🔴 CRÍTICO — Bugs que causam perda de dados ou falha silenciosa
+### 🔴 Crítico
+- [x] **1.** `AppConfig.Load()` — substituir `catch {}` vazio por log + aviso ao usuário
+- [x] **2.** `MainWindow.AttachControls` — remover handlers `LostFocus` duplicados de WexKeyBox, ExortKeyBox e InvokeKeyBox
+- [x] **3.** `KeyboardHookWin` — verificar retorno de `SetWindowsHookEx` e notificar falha
 
-- [x] **`AppConfig.Load()` engole toda exceção com `catch {}`**
-  - Arquivo: `AppConfig.cs:63`
-  - Problema: qualquer JSON corrompido apaga a config do usuário sem aviso.
-  - Correção: logar o erro e mostrar mensagem ao usuário antes de usar fallback.
+### 🟠 Alto
+- [x] **4.** Deletar `KeySender.cs` (dead code)
+- [x] **5.** Deletar `KeyMapper.cs` (dead code) e reescrever com mapeamento nome → VK correto
+- [x] **6.** Corrigir scancode errado de 'R' em `KeyMapper` — resolvido na reescrita do item 5
+- [x] **7.** Remover bloco WinAPI duplicado de `MainWindow` (`SendKeyToWindow`, `KeyToVirtualKey`, `PostMessage`, constantes)
+- [x] **8.** `ComboRunner.KeyToVirtualKey` — suportar teclas especiais (`space`, `f1`–`f12`, etc.) via `KeyMapper`
+- [x] **9.** Remover `AtualizarListaAtalhosSalvos` e sua chamada
+- [ ] **10.** Extrair lista de habilidades para constante estática em `AppConfig` (duplicada nas linhas 52 e 68)
 
-- [x] **Handlers de evento duplicados em `AttachControls`**
-  - Arquivo: `MainWindow.axaml.cs:174-181`
-  - Problema: `WexKeyBox`, `ExortKeyBox` e `InvokeKeyBox` registram `LostFocus += SaveConfigFromUI` duas vezes cada, causando duplo salvamento.
-  - Correção: remover as três linhas duplicadas (179, 180, 181).
+### 🟡 Médio
+- [ ] **11.** `MainWindow.OpenShortcutConfigBtn_Click` — parar de recriar o hook inteiro no save; apenas reconstruir o mapa de combos
+- [x] **12.** ~~`Thread.Sleep` em método `Task` no `KeySender`~~ — resolvido com deleção do arquivo (item 4)
+- [ ] **13.** Remover `RunComboAsync` ou ao menos o `await Task.Delay(500)` vestigial
+- [ ] **14.** Remover `Avalonia.Controls.DataGrid` do `.csproj`
 
-- [x] **`KeyboardHookWin` não verifica se o hook foi instalado com sucesso**
-  - Arquivo: `KeyboardHookWin.cs:16-18`
-  - Problema: se `SetWindowsHookEx` falhar, `_hookID` fica `IntPtr.Zero` e nenhum hotkey funciona — sem alerta ao usuário.
-  - Correção: verificar retorno de `SetWindowsHookEx` e lançar exceção ou disparar evento de erro.
-
----
-
-### 🟠 ALTO — Dead code, duplicação e lógica incorreta
-
-- [x] **`KeySender.cs` é dead code — deletar** — arquivo removido.
-- [x] **`KeyMapper.cs` é dead code — deletar** — arquivo removido. Será reescrito corretamente ao resolver o item 8.
-- [x] **Scancode errado para 'R' em `KeyMapper`** — resolvido junto com a remoção do arquivo.
-- [x] **Código WinAPI duplicado entre `MainWindow` e `ComboRunner`**
-  - Removidos `SendKeyToWindow`, `KeyToVirtualKey`, `PostMessage`, `WM_KEYDOWN/WM_KEYUP` de `MainWindow`.
-  - Mantido apenas `FindWindow` / `FindWindowByTitle` (ainda necessários).
-
-- [x] **`ComboRunner.KeyToVirtualKey` não suporta teclas especiais**
-  - `KeyMapper.cs` reescrito com mapeamento correto nome → VK (letras, números, space, f1-f12, modificadores).
-  - `ComboRunner.KeyToVirtualKey` delegado ao `KeyMapper.TryGetVirtualKey`.
-
-- [x] **`AtualizarListaAtalhosSalvos` é método vazio ainda chamado**
-  - Arquivo: `ShortcutConfigWindow.axaml.cs:85-88`
-  - Remover o método e sua chamada em `BtnSalvar_Click`.
-
-- [ ] **Lista de habilidades duplicada em `AppConfig.Load()`**
-  - Arquivo: `AppConfig.cs:52-73`
-  - O array de habilidades está copiado duas vezes (linha 52 e linha 68).
-  - Correção: extrair para constante estática `string[] DefaultAbilities`.
+### 🟢 Baixo
+- [ ] **15.** `ShortcutConfigWindow` — exibir nomes legíveis das habilidades (ex: "Panic Ghost Walk")
+- [ ] **16.** `ShortcutConfigWindow.axaml` — envolver `ShortcutStack` em `ScrollViewer`
+- [ ] **17.** `MainWindow.axaml` — renomear labels "Skill 1–6" para "Quas", "Wex", "Exort", "Invoke", "Spell 1", "Spell 2"
+- [ ] **18.** README — regravar como UTF-8 sem BOM
 
 ---
 
-### 🟡 MÉDIO — Qualidade e robustez
+## PROGRESSO
 
-- [ ] **Hook recriado desnecessariamente a cada save**
-  - Arquivo: `MainWindow.axaml.cs:45-48`
-  - Ao salvar configuração, o hook é descartado e recriado inteiro — há uma janela sem hotkeys ativos.
-  - Correção: apenas chamar `BuildComboToAbilityMap()` e recriar `ComboRunner`; manter o hook intacto.
-
-- [ ] **`Thread.Sleep` em método que retorna `Task` no `KeySender`**
-  - Arquivo: `KeySender.cs:14-18`
-  - Anti-pattern: bloqueia thread de forma síncrona em método assíncrono.
-  - Irrelevante se o arquivo for deletado; anotar para não reproduzir o padrão.
-
-- [ ] **`RunComboAsync` tem delay vestigial de 500ms**
-  - Arquivo: `MainWindow.axaml.cs:230`
-  - `await Task.Delay(500)` de debug nunca removido. O método nem é mais chamado pelo fluxo atual.
-  - Correção: remover o delay (ou o método inteiro, que é dead code).
-
-- [ ] **`Avalonia.Controls.DataGrid` referenciado sem uso**
-  - Arquivo: `KeyforgeDota.csproj:17`
-  - Nenhum `DataGrid` é usado. Remover a dependência para reduzir tamanho do build.
-
----
-
-### 🟢 BAIXO — UX e polish
-
-- [ ] **Nomes internos exibidos na janela de atalhos**
-  - Arquivo: `ShortcutConfigWindow.axaml.cs:37`
-  - Exibe `"panicghostwalk"`, `"deafeningblast"` etc. em vez de nomes legíveis.
-  - Correção: criar mapa `string → string` com nomes de exibição (ex: "panicghostwalk" → "Panic Ghost Walk").
-
-- [ ] **Sem ScrollViewer na janela de configuração de atalhos**
-  - Arquivo: `ShortcutConfigWindow.axaml`
-  - `ShortcutStack` sem scroll — com 11 habilidades pode cortar conteúdo em telas menores.
-  - Correção: envolver `ShortcutStack` em `ScrollViewer`.
-
-- [ ] **Labels das teclas na MainWindow são genéricas**
-  - Arquivo: `MainWindow.axaml:18-42`
-  - "Skill 1–6" não informa o usuário. Renomear para "Quas", "Wex", "Exort", "Invoke", "Spell 1", "Spell 2".
-
-- [ ] **README com encoding errado (UTF-16 LE com BOM)**
-  - O arquivo aparece garbled no GitHub e em qualquer leitor UTF-8.
-  - Correção: regravar como UTF-8 sem BOM.
-
----
-
-## ORDEM SUGERIDA DE EXECUÇÃO
-
-1. Bugs críticos (catch vazio, handlers duplicados, verificação do hook)
-2. Limpeza de dead code (KeySender, KeyMapper, duplicatas em MainWindow)
-3. Corrigir KeyMapper e integrar com ComboRunner para suporte a teclas especiais
-4. Refatorar recriação desnecessária do hook no save
-5. UX: nomes legíveis, ScrollViewer, labels
-6. README encoding
+Concluídos: 1, 2, 3, 4, 5, 6, 7, 8, 9, 12
+Pendentes: 10, 11, 13, 14, 15, 16, 17, 18
 
 ---
