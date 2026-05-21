@@ -50,19 +50,20 @@ Aplicativo desktop para automatizar combos do Invoker no Dota 2, com configuraç
 - [x] **11.** `MainWindow.OpenShortcutConfigBtn_Click` — parar de recriar o hook inteiro no save; apenas reconstruir o mapa de combos
 - [x] **12.** ~~`Thread.Sleep` em método `Task` no `KeySender`~~ — resolvido com deleção do arquivo (item 4)
 - [x] **13.** Remover `RunComboAsync` ou ao menos o `await Task.Delay(500)` vestigial
-- [ ] **14.** Remover `Avalonia.Controls.DataGrid` do `.csproj`
+- [x] **14.** Remover `Avalonia.Controls.DataGrid` do `.csproj` — substituído por `ItemsControl` nativo
 
 ### 🟢 Baixo
-- [ ] **15.** `ShortcutConfigWindow` — exibir nomes legíveis das habilidades (ex: "Panic Ghost Walk")
-- [ ] **16.** `ShortcutConfigWindow.axaml` — envolver `ShortcutStack` em `ScrollViewer`
-- [ ] **17.** `MainWindow.axaml` — renomear labels "Skill 1–6" para "Quas", "Wex", "Exort", "Invoke", "Spell 1", "Spell 2"
-- [ ] **18.** README — regravar como UTF-8 sem BOM
+- [x] **15.** `ShortcutConfigWindow` — exibir nomes legíveis das habilidades (ex: "Panic Ghost Walk") — via `DisplayName` em `AbilityShortcut`
+- [x] **16.** `ShortcutConfigWindow.axaml` — envolver `ShortcutStack` em `ScrollViewer` — resolvido na refatoração com `ItemsControl`
+- [ ] **17.** `MainWindow.axaml` — renomear labels "Skill 1–6" para "Quas", "Wex", "Exort", "Invoke", "Spell 1", "Spell 2" — ignorado a pedido
+- [x] **18.** README — regravar como UTF-8 sem BOM
 
 ---
 
 ## PROGRESSO
 
-Concluídos: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13
-Pendentes: 10, 11, 13, 14, 15, 16, 17, 18
+Concluídos: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18
+Ignorado: 17
+Pendentes: nenhum
 
 ---

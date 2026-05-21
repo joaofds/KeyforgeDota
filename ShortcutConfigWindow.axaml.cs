@@ -1,85 +1,36 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Avalonia.Markup.Xaml;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
-using Avalonia.Layout;
 
 namespace KeyforgeDota;
 
 public partial class ShortcutConfigWindow : Window
 {
     public ObservableCollection<AbilityShortcut> Shortcuts { get; set; }
-    private AppConfig _config;
+    private readonly AppConfig _config;
 
     public delegate void ConfigSavedHandler();
     public event ConfigSavedHandler? OnConfigSaved;
 
     public ShortcutConfigWindow(AppConfig config)
     {
-        InitializeComponent();
         _config = config;
         Shortcuts = new ObservableCollection<AbilityShortcut>(
             config.KeyCombos.Select(kv => new AbilityShortcut
             {
-                Ability = kv.Key,
+                Ability   = kv.Key,
                 Shortcut1 = kv.Value.Count > 0 ? kv.Value[0] : string.Empty,
                 Shortcut2 = kv.Value.Count > 1 ? kv.Value[1] : string.Empty
             })
         );
         DataContext = this;
-        var stack = this.FindControl<StackPanel>("ShortcutStack")!;
-        stack.Children.Clear();
-        foreach (var shortcut in Shortcuts)
-        {
-            var row = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 16, Margin = new Avalonia.Thickness(0, 0, 0, 8) };
-            row.Children.Add(new TextBlock
-            {
-                Text = shortcut.Ability,
-                Width = 140,
-                Foreground = Avalonia.Media.Brushes.White,
-                FontWeight = Avalonia.Media.FontWeight.SemiBold,
-                VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center
-            });
-            var hotkey1 = new HotkeyCaptureBox { Width = 120 };
-            hotkey1.Hotkey = shortcut.Shortcut1;
-            hotkey1.PropertyChanged += (s, e) => { if (e.Property == HotkeyCaptureBox.HotkeyProperty) shortcut.Shortcut1 = hotkey1.Hotkey; };
-            row.Children.Add(hotkey1);
-            var hotkey2 = new HotkeyCaptureBox { Width = 120 };
-            hotkey2.Hotkey = shortcut.Shortcut2;
-            hotkey2.PropertyChanged += (s, e) => { if (e.Property == HotkeyCaptureBox.HotkeyProperty) shortcut.Shortcut2 = hotkey2.Hotkey; };
-            row.Children.Add(hotkey2);
-            stack.Children.Add(row);
-        }
-        var btnSalvar = this.FindControl<Button>("BtnSalvar")!;
-        btnSalvar.Click += BtnSalvar_Click;
-        var btnCancelar = this.FindControl<Button>("BtnCancelar")!;
-        btnCancelar.Click += (_, __) => Close();
-        var btnFechar = this.FindControl<Button>("BtnFechar")!;
-        btnFechar.Click += (_, __) => Close();
+        InitializeComponent();
 
-        // Ao criar cada HotkeyCaptureBox, garantir que o texto inicial reflete o atalho salvo
-        foreach (var child in stack.Children)
-        {
-            if (child is StackPanel row)
-            {
-                foreach (var ctrl in row.Children)
-                {
-                    if (ctrl is HotkeyCaptureBox hotkeyBox)
-                    {
-                        var textBlock = hotkeyBox.FindControl<TextBlock>("HotkeyText");
-                        if (textBlock != null)
-                        {
-                            textBlock.Text = string.IsNullOrWhiteSpace(hotkeyBox.Hotkey) ? "Pressione..." : hotkeyBox.Hotkey;
-                            textBlock.Foreground = Avalonia.Media.Brushes.White;
-                        }
-                        var border = hotkeyBox.FindControl<Border>("MainBorder");
-                        if (border != null)
-                            border.Background = string.IsNullOrWhiteSpace(hotkeyBox.Hotkey) ? Avalonia.Media.Brushes.DimGray : Avalonia.Media.Brushes.ForestGreen;
-                    }
-                }
-            }
-        }
+        this.FindControl<Button>("BtnSalvar")!.Click   += BtnSalvar_Click;
+        this.FindControl<Button>("BtnCancelar")!.Click += (_, _) => Close();
     }
 
     private void BtnSalvar_Click(object? sender, RoutedEventArgs e)
@@ -88,28 +39,57 @@ public partial class ShortcutConfigWindow : Window
         {
             foreach (var s in Shortcuts)
             {
-                _config.KeyCombos[s.Ability] = new System.Collections.Generic.List<string>
-                {
-                    s.Shortcut1,
-                    s.Shortcut2
-                }.Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
+                _config.KeyCombos[s.Ability] = new List<string> { s.Shortcut1, s.Shortcut2 }
+                    .Where(x => !string.IsNullOrWhiteSpace(x))
+                    .ToList();
             }
             _config.Save();
-            // Feedback popup de sucesso
             _ = AlertPopup.Show(this, "Configurações salvas com sucesso!", true);
             OnConfigSaved?.Invoke();
         }
         catch (System.Exception ex)
         {
-            // Feedback popup de erro
             _ = AlertPopup.Show(this, $"Erro ao salvar: {ex.Message}", false);
         }
     }
 }
 
-public class AbilityShortcut
+public class AbilityShortcut : INotifyPropertyChanged
 {
+    private static readonly Dictionary<string, string> DisplayNames = new()
+    {
+        { "coldsnap",      "Cold Snap"       },
+        { "emp",           "EMP"             },
+        { "sunstrike",     "Sun Strike"      },
+        { "tornado",       "Tornado"         },
+        { "chaosmeteor",   "Chaos Meteor"    },
+        { "deafeningblast","Deafening Blast" },
+        { "icewall",       "Ice Wall"        },
+        { "ghostwalk",     "Ghost Walk"      },
+        { "panicghostwalk","Panic Ghost Walk"},
+        { "alacrity",      "Alacrity"        },
+        { "forgespirit",   "Forge Spirit"    },
+    };
+
+    private string _shortcut1 = string.Empty;
+    private string _shortcut2 = string.Empty;
+
     public string Ability { get; set; } = string.Empty;
-    public string Shortcut1 { get; set; } = string.Empty;
-    public string Shortcut2 { get; set; } = string.Empty;
+
+    public string DisplayName =>
+        DisplayNames.TryGetValue(Ability, out var name) ? name : Ability;
+
+    public string Shortcut1
+    {
+        get => _shortcut1;
+        set { _shortcut1 = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Shortcut1))); }
+    }
+
+    public string Shortcut2
+    {
+        get => _shortcut2;
+        set { _shortcut2 = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Shortcut2))); }
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
 }

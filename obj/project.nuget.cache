@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "bK08/vSeepw=",
+  "dgSpecHash": "5R/NXJAjoAw=",
   "success": true,
   "projectFilePath": "E:\\projetos\\cs\\KeyforgeDota\\KeyforgeDota.csproj",
   "expectedPackageFiles": [
@@ -8,7 +8,6 @@
     "C:\\Users\\Joao\\.nuget\\packages\\avalonia.angle.windows.natives\\2.1.25547.20250602\\avalonia.angle.windows.natives.2.1.25547.20250602.nupkg.sha512",
     "C:\\Users\\Joao\\.nuget\\packages\\avalonia.buildservices\\11.3.2\\avalonia.buildservices.11.3.2.nupkg.sha512",
     "C:\\Users\\Joao\\.nuget\\packages\\avalonia.controls.colorpicker\\11.3.11\\avalonia.controls.colorpicker.11.3.11.nupkg.sha512",
-    "C:\\Users\\Joao\\.nuget\\packages\\avalonia.controls.datagrid\\11.3.11\\avalonia.controls.datagrid.11.3.11.nupkg.sha512",
     "C:\\Users\\Joao\\.nuget\\packages\\avalonia.desktop\\11.3.11\\avalonia.desktop.11.3.11.nupkg.sha512",
     "C:\\Users\\Joao\\.nuget\\packages\\avalonia.diagnostics\\11.3.11\\avalonia.diagnostics.11.3.11.nupkg.sha512",
     "C:\\Users\\Joao\\.nuget\\packages\\avalonia.fonts.inter\\11.3.11\\avalonia.fonts.inter.11.3.11.nupkg.sha512",
@@ -37,7 +36,7 @@
     {
       "code": "NU1903",
       "level": "Warning",
-      "message": "Package 'Tmds.DBus.Protocol' 0.21.2 has a known high severity vulnerability, https://github.com/advisories/GHSA-xrw6-gwf8-vvr9",
+      "message": "O pacote 'Tmds.DBus.Protocol' 0.21.2 tem uma alta vulnerabilidade de gravidade conhecida, https://github.com/advisories/GHSA-xrw6-gwf8-vvr9",
       "projectPath": "E:\\projetos\\cs\\KeyforgeDota\\KeyforgeDota.csproj",
       "warningLevel": 1,
       "filePath": "E:\\projetos\\cs\\KeyforgeDota\\KeyforgeDota.csproj",

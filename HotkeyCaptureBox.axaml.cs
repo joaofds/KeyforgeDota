@@ -1,9 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
-using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
-using System;
 using System.Collections.Generic;
 
 namespace KeyforgeDota;
@@ -34,7 +32,36 @@ public partial class HotkeyCaptureBox : UserControl
     private bool _capturing = false;
     private HashSet<Key> _pressedKeys = new();
 
-    private void OnPointerPressed(object? sender, PointerPressedEventArgs e)
+    // Atualiza o visual quando a propriedade Hotkey muda externamente (ex: binding)
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+        if (change.Property == HotkeyProperty && !_capturing)
+            UpdateVisuals();
+    }
+
+    // Garante display correto ao ser inserido na árvore visual pelo ItemsControl
+    protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
+    {
+        base.OnAttachedToVisualTree(e);
+        UpdateVisuals();
+    }
+
+    private void UpdateVisuals()
+    {
+        var textBlock = this.FindControl<TextBlock>("HotkeyText");
+        var border = this.FindControl<Border>("MainBorder");
+        bool hasHotkey = !string.IsNullOrWhiteSpace(Hotkey);
+        if (textBlock != null)
+        {
+            textBlock.Text = hasHotkey ? Hotkey : "Pressione...";
+            textBlock.Foreground = Avalonia.Media.Brushes.White;
+        }
+        if (border != null)
+            border.Background = hasHotkey ? Avalonia.Media.Brushes.ForestGreen : Avalonia.Media.Brushes.DimGray;
+    }
+
+    private void OnPointerPressed(object? sender, Avalonia.Input.PointerPressedEventArgs e)
     {
         _capturing = true;
         _pressedKeys.Clear();
