@@ -47,9 +47,9 @@ Aplicativo desktop para automatizar combos do Invoker no Dota 2, com configuraç
 - [x] **10.** Extrair lista de habilidades para constante estática em `AppConfig` (duplicada nas linhas 52 e 68)
 
 ### 🟡 Médio
-- [ ] **11.** `MainWindow.OpenShortcutConfigBtn_Click` — parar de recriar o hook inteiro no save; apenas reconstruir o mapa de combos
+- [x] **11.** `MainWindow.OpenShortcutConfigBtn_Click` — parar de recriar o hook inteiro no save; apenas reconstruir o mapa de combos
 - [x] **12.** ~~`Thread.Sleep` em método `Task` no `KeySender`~~ — resolvido com deleção do arquivo (item 4)
-- [ ] **13.** Remover `RunComboAsync` ou ao menos o `await Task.Delay(500)` vestigial
+- [x] **13.** Remover `RunComboAsync` ou ao menos o `await Task.Delay(500)` vestigial
 - [ ] **14.** Remover `Avalonia.Controls.DataGrid` do `.csproj`
 
 ### 🟢 Baixo
@@ -62,7 +62,7 @@ Aplicativo desktop para automatizar combos do Invoker no Dota 2, com configuraç
 
 ## PROGRESSO
 
-Concluídos: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12
+Concluídos: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13
 Pendentes: 10, 11, 13, 14, 15, 16, 17, 18
 
 ---

@@ -52,16 +52,6 @@ public partial class MainWindow : Window
             Config = AppConfig.Load();
             BuildComboToAbilityMap();
             _comboRunner = new ComboRunner(Config);
-            _keyboardHook?.Dispose();
-            try
-            {
-                _keyboardHook = new KeyboardHookWin();
-                _keyboardHook.OnComboPressed += KeyboardHook_OnComboPressed;
-            }
-            catch (InvalidOperationException ex)
-            {
-                SetStatus($"Hook de teclado falhou: {ex.Message}", error: true);
-            }
         };
         win.ShowDialog(this);
     }
@@ -226,34 +216,6 @@ public partial class MainWindow : Window
     {
         UpdateConfigFromUI();
         Config.Save();
-    }
-
-    private async Task RunComboAsync(Func<IntPtr, Task> comboFunc)
-    {
-        UpdateConfigFromUI();
-        SetStatus("Buscando janela...");
-        var hWnd = FindWindowByTitle(Config.WindowName);
-        if (hWnd == IntPtr.Zero)
-        {
-            SetStatus($"Janela '{Config.WindowName}' não encontrada", error: true);
-            return;
-        }
-        // Tenta obter o título real da janela encontrada
-        string foundTitle = GetWindowTitle(hWnd);
-        SetStatus($"Janela encontrada: '{foundTitle}' (hWnd: 0x{hWnd.ToInt64():X})");
-        await Task.Delay(500);
-        SetStatus("Executando combo...");
-        await comboFunc(hWnd);
-        SetStatus("Pronto");
-    }
-    [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-    private static extern int GetWindowText(IntPtr hWnd, System.Text.StringBuilder lpString, int nMaxCount);
-
-    private string GetWindowTitle(IntPtr hWnd)
-    {
-        var sb = new System.Text.StringBuilder(256);
-        GetWindowText(hWnd, sb, sb.Capacity);
-        return sb.ToString();
     }
 
     private void SetStatus(string text, bool error = false)
