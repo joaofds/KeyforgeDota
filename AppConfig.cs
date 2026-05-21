@@ -17,8 +17,14 @@ public class AppConfig
     public string FirstSpellKey { get; set; } = "d";
     public string SecondSpellKey { get; set; } = "f";
 
-    // Novo: Mapeamento de combinações para habilidades
     public Dictionary<string, List<string>> KeyCombos { get; set; } = new();
+
+    [JsonIgnore]
+    public static readonly string[] DefaultAbilities =
+    {
+        "coldsnap", "emp", "sunstrike", "tornado", "chaosmeteor", "deafeningblast",
+        "icewall", "ghostwalk", "panicghostwalk", "alacrity", "forgespirit"
+    };
 
     [JsonIgnore]
     public static string ConfigPath => Path.Combine(AppContext.BaseDirectory, "config.json");
@@ -50,13 +56,7 @@ public class AppConfig
                 config = new AppConfig();
             }
 
-            // Garante que todas as habilidades padrão estejam presentes
-            var habilidades = new[]
-            {
-                "coldsnap", "emp", "sunstrike", "tornado", "chaosmeteor", "deafeningblast",
-                "icewall", "ghostwalk", "panicghostwalk", "alacrity", "forgespirit"
-            };
-            foreach (var hab in habilidades)
+            foreach (var hab in DefaultAbilities)
             {
                 if (!config.KeyCombos.ContainsKey(hab))
                     config.KeyCombos[hab] = new List<string>();
@@ -72,12 +72,7 @@ public class AppConfig
         }
         // fallback
         var fallback = new AppConfig();
-        var habilidades2 = new[]
-        {
-            "coldsnap", "emp", "sunstrike", "tornado", "chaosmeteor", "deafeningblast",
-            "icewall", "ghostwalk", "panicghostwalk", "alacrity", "forgespirit"
-        };
-        foreach (var hab in habilidades2)
+        foreach (var hab in DefaultAbilities)
             fallback.KeyCombos[hab] = new List<string>();
         return fallback;
     }

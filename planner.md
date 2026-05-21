@@ -44,7 +44,7 @@ Aplicativo desktop para automatizar combos do Invoker no Dota 2, com configuraç
 - [x] **7.** Remover bloco WinAPI duplicado de `MainWindow` (`SendKeyToWindow`, `KeyToVirtualKey`, `PostMessage`, constantes)
 - [x] **8.** `ComboRunner.KeyToVirtualKey` — suportar teclas especiais (`space`, `f1`–`f12`, etc.) via `KeyMapper`
 - [x] **9.** Remover `AtualizarListaAtalhosSalvos` e sua chamada
-- [ ] **10.** Extrair lista de habilidades para constante estática em `AppConfig` (duplicada nas linhas 52 e 68)
+- [x] **10.** Extrair lista de habilidades para constante estática em `AppConfig` (duplicada nas linhas 52 e 68)
 
 ### 🟡 Médio
 - [ ] **11.** `MainWindow.OpenShortcutConfigBtn_Click` — parar de recriar o hook inteiro no save; apenas reconstruir o mapa de combos
@@ -62,7 +62,7 @@ Aplicativo desktop para automatizar combos do Invoker no Dota 2, com configuraç
 
 ## PROGRESSO
 
-Concluídos: 1, 2, 3, 4, 5, 6, 7, 8, 9, 12
+Concluídos: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12
 Pendentes: 10, 11, 13, 14, 15, 16, 17, 18
 
 ---
