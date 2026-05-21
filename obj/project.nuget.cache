@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Q77A41VMuEk=",
+  "dgSpecHash": "GRSz2EkACLo=",
   "success": true,
   "projectFilePath": "E:\\projetos\\cs\\Dota2InvokerHelper\\Dota2InvokerHelper.csproj",
   "expectedPackageFiles": [
@@ -36,7 +36,7 @@
     {
       "code": "NU1903",
       "level": "Warning",
-      "message": "O pacote 'Tmds.DBus.Protocol' 0.21.2 tem uma alta vulnerabilidade de gravidade conhecida, https://github.com/advisories/GHSA-xrw6-gwf8-vvr9",
+      "message": "Package 'Tmds.DBus.Protocol' 0.21.2 has a known high severity vulnerability, https://github.com/advisories/GHSA-xrw6-gwf8-vvr9",
       "projectPath": "E:\\projetos\\cs\\Dota2InvokerHelper\\Dota2InvokerHelper.csproj",
       "warningLevel": 1,
       "filePath": "E:\\projetos\\cs\\Dota2InvokerHelper\\Dota2InvokerHelper.csproj",

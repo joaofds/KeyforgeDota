@@ -4,11 +4,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="520" Width="480" Height="520" MinWidth="480" MinHeight="520" MaxWidth="480" MaxHeight="520"
         x:Class="Dota2InvokerHelper.MainWindow"
-        Title="Dota2 Invoker Helper">
+        Title="Dota2 Invoker Helper"
+        Icon="avares://Dota2InvokerHelper/Assets/invoker_icon.png">
     <Border Background="#23272F" CornerRadius="12" Padding="24">
         <Grid>
             <StackPanel Spacing="18">
-            <TextBlock Text="Dota2 Invoker Helper" FontSize="28" Foreground="#F5F6FA" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10" VerticalAlignment="Center">
+                <Image Source="avares://Dota2InvokerHelper/Assets/invoker_icon.png" Width="36" Height="36" VerticalAlignment="Center"/>
+                <TextBlock Text="Dota2 Invoker Helper" FontSize="28" Foreground="#F5F6FA" FontWeight="Bold" VerticalAlignment="Center"/>
+            </StackPanel>
             <TextBlock Text="Janela de destino (nome exato):" Foreground="#B0B3B8"/>
             <TextBox Name="WindowNameBox" Watermark="Ex: Dota 2" Background="#2C2F36" Foreground="#F5F6FA"/>
 
